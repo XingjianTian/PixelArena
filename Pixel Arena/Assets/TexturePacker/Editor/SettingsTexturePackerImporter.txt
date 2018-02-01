@@ -1,0 +1,15 @@
+version: 2
+importPivots: 1
+tpsheetFileNames:
+- Assets/Picture/bg/MapChapter1.tpsheet
+- Assets/Picture/tools/Tools.tpsheet
+- Assets/Platformer Animation Pack/NPCs.tpsheet
+textureFileNames:
+- Assets/Picture/bg/MapChapter1.png
+- Assets/Picture/tools/Tools.png
+- Assets/Platformer Animation Pack/NPCs.png
+normalmapFileNames:
+- 
+- 
+- 
+enableDebugOutput: 0

@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ContentModelStore">
+    <e p="C:\Users\txj12\.Rider2017.2\system\resharper-host\local\Transient\ReSharperHost\v10\SolutionCaches\_ServerTest.1154748129.00" t="ExcludeRecursive" />
+    <e p="C:\Users\txj12\Documents\Visual Studio 2017\Projects\C sharp\ServerTest" t="IncludeFlat">
+      <e p="packages" t="ExcludeRecursive" />
+      <e p="ServerTest" t="IncludeRecursive">
+        <e p="App.config" t="Include" />
+        <e p="bin" t="ExcludeRecursive" />
+        <e p="Core" t="Include">
+          <e p="Conn.cs" t="Include" />
+          <e p="DataMgr.cs" t="Include" />
+          <e p="Player.cs" t="Include" />
+          <e p="Program.cs" t="Include" />
+          <e p="ProtocolBase.cs" t="Include" />
+          <e p="ProtocolBytes.cs" t="Include" />
+          <e p="ProtocolStr.cs" t="Include" />
+          <e p="RoomMgr.cs" t="Include" />
+          <e p="ServNet.cs" t="Include" />
+          <e p="Sys.cs" t="Include" />
+        </e>
+        <e p="Logic" t="Include">
+          <e p="HandleBattleMsg.cs" t="Include" />
+          <e p="HandleConnMsg.cs" t="Include" />
+          <e p="HandlePlayerEvent.cs" t="Include" />
+          <e p="HandlePlayerMsg.cs" t="Include" />
+          <e p="HandleRoomMsg.cs" t="Include" />
+          <e p="PlayerData.cs" t="Include" />
+          <e p="PlayerTempData.cs" t="Include" />
+          <e p="Room.cs" t="Include" />
+          <e p="Scene.cs" t="Include" />
+          <e p="ScenePlayer.cs" t="Include" />
+        </e>
+        <e p="obj" t="ExcludeRecursive" />
+        <e p="Properties" t="Include">
+          <e p="AssemblyInfo.cs" t="Include" />
+        </e>
+        <e p="ServerTest.csproj" t="IncludeRecursive" />
+      </e>
+      <e p="ServerTest.sln" t="IncludeFlat" />
+    </e>
+  </component>
+</project>

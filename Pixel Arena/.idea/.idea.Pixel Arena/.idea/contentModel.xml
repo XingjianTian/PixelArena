@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ContentModelStore">
+    <e p="C:\Users\txj12\.Rider2017.2\system\resharper-host\local\Transient\ReSharperHost\v10\SolutionCaches\_Pixel Arena.-295320660.00" t="ExcludeRecursive" />
+    <e p="C:\Users\txj12\Documents\Unity_Projects\Pixel Arena" t="IncludeRecursive">
+      <e p="Assembly-CSharp-Editor-firstpass.csproj" t="IncludeRecursive" />
+      <e p="Assembly-CSharp-Editor.csproj" t="IncludeRecursive" />
+      <e p="Assembly-CSharp.csproj" t="IncludeRecursive" />
+      <e p="Assets" t="Include">
+        <e p="2DDL" t="Include">
+          <e p="2DLight" t="Include">
+            <e p="AssetUtility" t="Include">
+              <e p="AssetUtility.cs" t="Include" />
+            </e>
+            <e p="CheckUpdate" t="Include">
+              <e p="CheckUpdateAsset.cs" t="Include" />
+              <e p="CheckUpdateBuilder.cs" t="Include" />
+              <e p="CheckUpdateWindow.cs" t="Include" />
+            </e>
+            <e p="Core" t="Include">
+              <e p="CasterCollider.cs" t="Include" />
+              <e p="DynamicLight.cs" t="Include" />
+            </e>
+            <e p="Editor" t="Include">
+              <e p="DynamicLightEditor.cs" t="Include" />
+              <e p="DynamicLightMenu.cs" t="Include" />
+              <e p="SortingMethod.cs" t="Include" />
+            </e>
+            <e p="Settings" t="Include">
+              <e p="DynamicLightSetting.cs" t="Include" />
+              <e p="SettingsManager.cs" t="Include" />
+              <e p="SettingsWindow.cs" t="Include" />
+              <e p="TagLayerClass.cs" t="Include" />
+              <e p="usage.cs" t="Include" />
+            </e>
+          </e>
+          <e p="Shaders" t="Include">
+            <e p="CGTexturizing.shader" t="Include" />
+            <e p="DefaultTexturized.shader" t="Include" />
+            <e p="DepthMask.shader" t="Include" />
+            <e p="Gradient-ZFighting.shader" t="Include" />
+            <e p="OffsetShader.shader" t="Include" />
+            <e p="RadialGradientAlphaBlend.shader" t="Include" />
+            <e p="StencilMask.shader" t="Include" />
+            <e p="StencilObject.shader" t="Include" />
+            <e p="VertexColor.shader" t="Include" />
+          </e>
+        </e>
+        <e p="EasyTouch" t="Include">
+          <e p="Plugins" t="Include">
+            <e p="_C#-Event-Template" t="Include">
+              <e p="C_EasyButtonTemplate.cs" t="Include" />
+              <e p="C_EasyJoystickTemplate.cs" t="Include" />
+              <e p="C_EasyTouchTemplate.cs" t="Include" />
+            </e>
+            <e p="EasyButton.cs" t="Include" />
+            <e p="EasyJoystick.cs" t="Include" />
+            <e p="EasyTouch.cs" t="Include" />
+            <e p="EasyTouchInput.cs" t="Include" />
+            <e p="ECamera.cs" t="Include" />
+            <e p="Editor" t="Include">
+              <e p="GUIEasyButtonCallBack.cs" t="Include" />
+              <e p="GUIEasyButtonInspector.cs" t="Include" />
+              <e p="GUIEasyJoystickCallBack.cs" t="Include" />
+              <e p="GUIEasyJoystickInspector.cs" t="Include" />
+              <e p="GUIEasytouchCallBack.cs" t="Include" />
+              <e p="GUIEasyTouchInspector.cs" t="Include" />
+              <e p="GUIEasyTouchMenu.cs" t="Include" />
+              <e p="HTGUILayout.cs" t="Include" />
+            </e>
+            <e p="Finger.cs" t="Include" />
+            <e p="Gesture.cs" t="Include" />
+            <e p="MonoSingleton.cs" t="Include" />
+            <e p="MovingJoystick.cs" t="Include" />
+            <e p="VirtualScreen.cs" t="Include" />
+          </e>
+        </e>
+        <e p="Plugins" t="Include">
+          <e p="Editor" t="Include">
+            <e p="JetBrains" t="Include">
+              <e p="Unity3DRider.cs" t="Include" />
+            </e>
+          </e>
+        </e>
+        <e p="Scripts" t="Include">
+          <e p="Camera" t="Include">
+            <e p="CameraBlack.cs" t="Include" />
+            <e p="CameraMoveWithPlayer.cs" t="Include" />
+            <e p="DeathCameraFade.cs" t="Include" />
+            <e p="ImageTest.shader" t="Include" />
+            <e p="Test3.shader" t="Include" />
+          </e>
+          <e p="Manager2.cs" t="Include" />
+          <e p="Net" t="Include">
+            <e p="Core" t="Include">
+              <e p="Connection.cs" t="Include" />
+              <e p="MsgDistribution.cs" t="Include" />
+              <e p="NetMgr.cs" t="Include" />
+              <e p="ProtocolBase.cs" t="Include" />
+              <e p="ProtocolBytes.cs" t="Include" />
+              <e p="ProtocolStr.cs" t="Include" />
+            </e>
+            <e p="GameMgr.cs" t="Include" />
+            <e p="MultiBattle.cs" t="Include" />
+            <e p="Panel" t="Include">
+              <e p="LoginPanel.cs" t="Include" />
+              <e p="PanelBase.cs" t="Include" />
+              <e p="PanelMgr.cs" t="Include" />
+              <e p="RegPanel.cs" t="Include" />
+              <e p="RoomListPanel.cs" t="Include" />
+              <e p="RoomPanel.cs" t="Include" />
+              <e p="TipPanel.cs" t="Include" />
+            </e>
+            <e p="Root.cs" t="Include" />
+          </e>
+          <e p="Player" t="Include">
+            <e p="BattlePlayer.cs" t="Include" />
+            <e p="ControlKeys.cs" t="Include" />
+            <e p="DeathControl.cs" t="Include" />
+            <e p="JumpAgainstWall.cs" t="Include" />
+            <e p="PlayerControl.cs" t="Include" />
+            <e p="ResPutUp.cs" t="Include" />
+          </e>
+          <e p="showTest.cs" t="Include" />
+          <e p="Tools" t="Include">
+            <e p="Bullet.cs" t="Include" />
+            <e p="Gun.cs" t="Include" />
+            <e p="ToolFloating.cs" t="Include" />
+          </e>
+          <e p="Volume.cs" t="Include" />
+        </e>
+        <e p="TexturePacker" t="Include">
+          <e p="Editor" t="Include">
+            <e p="SettingsTexturePackerImporter.txt" t="Include" />
+          </e>
+        </e>
+      </e>
+      <e p="Library" t="ExcludeRecursive" />
+      <e p="obj" t="ExcludeRecursive" />
+      <e p="packages" t="ExcludeRecursive" />
+      <e p="Pixel Arena.sln" t="IncludeFlat" />
+      <e p="Temp" t="ExcludeRecursive">
+        <e p="bin" t="ExcludeRecursive" />
+      </e>
+    </e>
+  </component>
+  <component name="RiderRiderContentModelStore">
+    <excludedPaths>
+      <Path>Temp</Path>
+      <Path>Library</Path>
+    </excludedPaths>
+  </component>
+</project>
