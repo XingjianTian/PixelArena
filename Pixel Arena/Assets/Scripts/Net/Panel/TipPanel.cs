@@ -1,11 +1,9 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 
 public class TipPanel : PanelBase
 {
-    private Text text;
+    private Text Text;
     private Button btn;
     string str = "";
 
@@ -27,11 +25,12 @@ public class TipPanel : PanelBase
         base.OnShowing();
         Transform skinTrans = skin.transform;
         //文字
-        text = skinTrans.Find("Text").GetComponent<Text>();
-        text.text = str;
+        Text = skinTrans.Find("Text").GetComponent<Text>();
+        Text.text = str;
         //关闭按钮
         btn = skinTrans.Find("CloseButton").GetComponent<Button>();
         btn.onClick.AddListener(OnCloseButtonClick);
+        
     }
 
 
@@ -39,21 +38,30 @@ public class TipPanel : PanelBase
     //按下按钮
     public void OnCloseButtonClick()
     {
+        AudioSource.PlayClipAtPoint(Volume.instance.Events[0],Camera.main.transform.position);
         Close();
-        if (text.text == "你胜利了！" || text.text == "你失败了！")
+        if (Text.text == "You Won !" || Text.text == "You Lost !")
         {
             SendLeaveBattleInfo();
+            CameraMoveWithPlayer cmwp = Camera.main.gameObject.GetComponent<CameraMoveWithPlayer>();
+            cmwp.Reset();
             MultiBattle.Instance.ClearBattle();
             DeathCameraFade.Instance.enabled = false;
             PanelMgr.instance.OpenPanel<RoomPanel>("");
             
+        }
+        if (Text.text == "Want to quit ?")
+        {
+            ProtocolBytes protocol = new ProtocolBytes();
+            protocol.AddString("Logout");
+            NetMgr.srvConn.Send(protocol, (ProtocolBase) =>NetMgr.srvConn.Close());
+            Application.Quit();
         }
     }
     public void SendLeaveBattleInfo()
     {
         ProtocolBytes proto = new ProtocolBytes();
         proto.AddString("LeaveBattle");
-        proto.AddString(GameMgr.Instance.id);
         NetMgr.srvConn.Send(proto);
     }
 

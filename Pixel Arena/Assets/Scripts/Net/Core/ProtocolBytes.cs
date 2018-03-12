@@ -1,5 +1,4 @@
 using System;
-using System.Collections;
 using System.Linq;
 
 //字节流协议模型

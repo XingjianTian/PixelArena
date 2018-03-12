@@ -4,8 +4,6 @@ using UnityEngine;
 using UnityEditor;
 using System.IO;
 
-using System.Collections;
-
 public class AssetUtility{
 	//static SerializedObject profile;
 

@@ -1,9 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Net;
-using System.IO;
 using UnityEngine;
 using System.Net.Sockets;
 //异步socket，大体与服务器端Serv相同
@@ -44,7 +40,7 @@ public class Connection
             socket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
             //Connect
             socket.Connect(host, port);
-            //BeginReceive
+            //BeginReceive 异步回调
             socket.BeginReceive(readBuff, buffCount, BUFFER_SIZE - buffCount, SocketFlags.None,
                 ReceiveCb, readBuff);
             //Debug.Log("连接成功");
@@ -54,7 +50,7 @@ public class Connection
         }
         catch (System.Exception e)
         {
-            //Debug.Log("连接失败： " + e.Message);
+            Debug.Log("连接失败： " + e.Message);
             return false;
         }
     }
@@ -86,7 +82,6 @@ public class Connection
         }
         catch (System.Exception e)
         {
-            //Debug.Log("ReceiveCb失败： " + e.Message);
             status = Status.None;
         }
     }
@@ -103,7 +98,6 @@ public class Connection
             return;
         //协议解码
         ProtocolBase protocol = proto.Decode(readBuff, sizeof(Int32), msgLength);
-        //Debug.Log("收到消息 " + protocol.GetDesc());
         lock (msgDist.msgList)//锁住
         {
             msgDist.msgList.Add(protocol);
@@ -121,14 +115,12 @@ public class Connection
     {
         if(status!=Status.Connected)
         {
-            //Debug.LogError("[Connection]还没连接");
             return true;
         }
         byte[] b = protocol.Encode();
         byte[] length = BitConverter.GetBytes(b.Length);
         byte[] sendbuff = length.Concat(b).ToArray();
         socket.Send(sendbuff);
-        //Debug.Log("发送消息 " + protocol.GetDesc());
         return true;
     }
     public bool Send(ProtocolBase protocol,string cbName,MsgDistribution.Delegate cb)

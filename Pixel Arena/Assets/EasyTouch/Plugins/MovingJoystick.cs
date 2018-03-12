@@ -1,5 +1,4 @@
 using UnityEngine;
-using System.Collections;
 
 /// <summary>
 /// Moving joystick.This is the class passed as parameter to the event On_JoystickMove

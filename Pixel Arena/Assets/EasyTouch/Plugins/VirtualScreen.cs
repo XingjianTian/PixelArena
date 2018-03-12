@@ -3,7 +3,6 @@
 // Please send feedback or bug reports to the.hedgehog.team@gmail.com
 
 using UnityEngine;
-using System.Collections;
 
 public class VirtualScreen :  MonoSingleton<VirtualScreen> {
 	

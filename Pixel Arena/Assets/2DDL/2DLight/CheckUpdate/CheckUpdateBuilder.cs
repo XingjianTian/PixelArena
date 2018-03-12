@@ -1,7 +1,5 @@
 ﻿#if UNITY_EDITOR
-using UnityEngine;
 using UnityEditor;
-using System.Collections;
 
 public class CheckUpdateManager{
 	//[MenuItem("2DDL/Create/Versions AssetBundle")]

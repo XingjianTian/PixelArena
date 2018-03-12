@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 
 public class RegPanel : PanelBase {
@@ -38,32 +36,26 @@ public class RegPanel : PanelBase {
 
     public void OnCloseClick()
     {
+        AudioSource.PlayClipAtPoint(Volume.instance.Events[0],Camera.main.transform.position);
         PanelMgr.instance.OpenPanel<LoginPanel>("");
         Close();
     }
     public void OnRegClick()
     {
+        AudioSource.PlayClipAtPoint(Volume.instance.Events[0],Camera.main.transform.position);
         //用户名密码为空
         if (idInput.text == "" || pwInput.text == "")
         {
-            PanelMgr.instance.OpenPanel<TipPanel>("", "用户名或密码不能为空！");
+            PanelMgr.instance.OpenPanel<TipPanel>("", "Please Enter rightly!");
             return;
         }
 
         if(pwInput.text!=repInput.text)
         {
-            PanelMgr.instance.OpenPanel<TipPanel>("", "请确认密码！");
+            PanelMgr.instance.OpenPanel<TipPanel>("", "Please Repeat password!");
             return;
         }
 
-        if(NetMgr.srvConn.status!=Connection.Status.Connected)
-        {
-            string host = "127.0.0.1";
-            int port = 1234;
-            NetMgr.srvConn.proto = new ProtocolBytes();
-            NetMgr.srvConn.Connect(host, port);
-        }
-        //发送
         ProtocolBytes protocol = new ProtocolBytes();
         protocol.AddString("Register");
         protocol.AddString(idInput.text);
@@ -78,7 +70,7 @@ public class RegPanel : PanelBase {
             int ret = proto.GetInt(start, ref start);
             if (ret == 0)
             {
-                Debug.Log("注册成功!");
+                PanelMgr.instance.OpenPanel<TipPanel>("", "Success！");
                 PanelMgr.instance.OpenPanel<LoginPanel>("");
                 Close();
             }

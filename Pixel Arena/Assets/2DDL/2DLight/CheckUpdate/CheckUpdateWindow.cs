@@ -2,9 +2,6 @@
 
 using UnityEngine;
 using UnityEditor;
-using Object = UnityEngine.Object;
-using System.Collections;
-
 
 
 public class DynamicLightAboutWindow : EditorWindow {

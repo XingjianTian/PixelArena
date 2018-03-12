@@ -13,20 +13,25 @@ public partial class HandlePlayerMsg
     //创建房间
     public void MsgCreateRoom(Player player,ProtocolBase protoBase)
     {
-        ProtocolBytes protocol = new ProtocolBytes();
-        protocol.AddString("CreateRoom");
+        int start = 0;
+        ProtocolBytes protocol = (ProtocolBytes)protoBase;
+        string protoName = protocol.GetString(start, ref start);
+        int herotype = protocol.GetInt(start, ref start);
+        int maptype = protocol.GetInt(start, ref start);
+        ProtocolBytes protocolret = new ProtocolBytes();
+        protocolret.AddString("CreateRoom");
         //条件检测
-        if(player.tempData.status!=PlayerTempData.Status.None)
+        if(player.tempData.status!=PlayerTempData.Status.OutOfRoom)
         {
             Console.WriteLine("MsgCreateRoom Fail " + player.id);
-            protocol.AddInt(-1);
-            player.Send(protocol);
+            protocolret.AddInt(-1);
+            player.Send(protocolret);
             return;
         }
-        RoomMgr.Instance.CreateRoom(player);
-        protocol.AddInt(0);
-        player.Send(protocol);
-        Console.WriteLine("MsgCreateRoom Ok" + player.id);
+        RoomMgr.Instance.CreateRoom(player,herotype,maptype);
+        protocolret.AddInt(0);
+        player.Send(protocolret);
+        Console.WriteLine("MsgCreateRoom Ok " + player.id + " "+herotype+" "+maptype);
     }
     //加入房间
     public void MsgEnterRoom(Player player,ProtocolBase protoBase)
@@ -35,7 +40,8 @@ public partial class HandlePlayerMsg
         ProtocolBytes protocol = (ProtocolBytes)protoBase;
         string protoName = protocol.GetString(start, ref start);
         int index = protocol.GetInt(start, ref start);
-        Console.WriteLine("[收到MsgEnterRoom]" + player.id + " " + index);
+        int herotype = protocol.GetInt(start, ref start);
+        Console.WriteLine("[收到MsgEnterRoom] " + player.id + " " + index +" "+herotype);
         protocol = new ProtocolBytes();
         protocol.AddString("EnterRoom");
         //判断房间是否存在
@@ -56,7 +62,7 @@ public partial class HandlePlayerMsg
             return;
         }
         //添加玩家
-        if(room.AddPlayer(player))
+        if(room.AddPlayer(player,herotype))
         {
             room.Broadcast(room.GetRoomInfo());
             protocol.AddInt(0);
@@ -72,7 +78,8 @@ public partial class HandlePlayerMsg
     //获取房间信息
     public void MsgGetRoomInfo(Player player,ProtocolBase protoBase)
     {
-        if(player.tempData.status!=PlayerTempData.Status.InRoom)
+        if(player.tempData.status!=PlayerTempData.Status.InRoomReady &&
+            player.tempData.status != PlayerTempData.Status.InRoomNotReady)
         {
             Console.WriteLine("MsgGetRoomInfo status error " + player.id);
             return;
@@ -86,7 +93,8 @@ public partial class HandlePlayerMsg
         ProtocolBytes protocol = new ProtocolBytes();
         protocol.AddString("LeaveRoom");
         //条件检测
-        if(player.tempData.status!=PlayerTempData.Status.InRoom)
+        if(player.tempData.status!=PlayerTempData.Status.InRoomReady&&
+            player.tempData.status!=PlayerTempData.Status.InRoomNotReady)
         {
             Console.WriteLine("MsgLeaveRoom status error " + player.id);
             protocol.AddInt(-1);

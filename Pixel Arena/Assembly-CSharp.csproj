@@ -23,7 +23,7 @@
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
     <OutputPath>Temp\bin\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE;UNITY_5_3_OR_NEWER;UNITY_5_4_OR_NEWER;UNITY_5_5_OR_NEWER;UNITY_5_6_OR_NEWER;UNITY_2017_1_OR_NEWER;UNITY_2017_2_OR_NEWER;UNITY_2017_2_0;UNITY_2017_2;UNITY_2017;UNITY_ANALYTICS;ENABLE_AUDIO;ENABLE_CACHING;ENABLE_CLOTH;ENABLE_GENERICS;ENABLE_PVR_GI;ENABLE_MICROPHONE;ENABLE_MULTIPLE_DISPLAYS;ENABLE_PHYSICS;ENABLE_SPRITERENDERER_FLIPPING;ENABLE_SPRITES;ENABLE_GRID;ENABLE_TILEMAP;ENABLE_TERRAIN;ENABLE_RAKNET;ENABLE_DIRECTOR;ENABLE_UNET;ENABLE_LZMA;ENABLE_UNITYEVENTS;ENABLE_WEBCAM;ENABLE_WWW;ENABLE_CLOUD_SERVICES_COLLAB;ENABLE_CLOUD_SERVICES_COLLAB_SOFTLOCKS;ENABLE_CLOUD_SERVICES_ADS;ENABLE_CLOUD_HUB;ENABLE_CLOUD_PROJECT_ID;ENABLE_CLOUD_SERVICES_USE_WEBREQUEST;ENABLE_CLOUD_SERVICES_UNET;ENABLE_CLOUD_SERVICES_BUILD;ENABLE_CLOUD_LICENSE;ENABLE_EDITOR_HUB;ENABLE_EDITOR_HUB_LICENSE;ENABLE_WEBSOCKET_CLIENT;ENABLE_DIRECTOR_AUDIO;ENABLE_TIMELINE;ENABLE_EDITOR_METRICS;ENABLE_EDITOR_METRICS_CACHING;ENABLE_NATIVE_ARRAY;ENABLE_SPRITE_MASKING;INCLUDE_DYNAMIC_GI;INCLUDE_GI;ENABLE_MONO_BDWGC;PLATFORM_SUPPORTS_MONO;INCLUDE_PUBNUB;ENABLE_PLAYMODE_TESTS_RUNNER;ENABLE_VIDEO;ENABLE_RMGUI;ENABLE_PACKMAN;ENABLE_CUSTOM_RENDER_TEXTURE;ENABLE_STYLE_SHEETS;PLATFORM_ANDROID;UNITY_ANDROID;UNITY_ANDROID_API;ENABLE_SUBSTANCE;ENABLE_EGL;ENABLE_NETWORK;ENABLE_RUNTIME_GI;ENABLE_CRUNCH_TEXTURE_COMPRESSION;ENABLE_UNITYWEBREQUEST;ENABLE_CLOUD_SERVICES;ENABLE_CLOUD_SERVICES_ANALYTICS;ENABLE_EVENT_QUEUE;ENABLE_CLOUD_SERVICES_PURCHASING;ENABLE_CLOUD_SERVICES_CRASH_REPORTING;ENABLE_CLOUD_SERVICES_NATIVE_CRASH_REPORTING;PLATFORM_SUPPORTS_ADS_ID;UNITY_CAN_SHOW_SPLASH_SCREEN;ENABLE_VR;ENABLE_AR;ENABLE_SPATIALTRACKING;ENABLE_UNITYADS_RUNTIME;UNITY_UNITYADS_API;ENABLE_MONO;NET_2_0_SUBSET;DEVELOPMENT_BUILD;ENABLE_PROFILER;UNITY_ASSERTIONS;UNITY_EDITOR;UNITY_EDITOR_64;UNITY_EDITOR_WIN;ENABLE_NATIVE_ARRAY_CHECKS;UNITY_TEAM_LICENSE;UNITY_PRO_LICENSE;UNITY_HAS_GOOGLEVR;UNITY_HAS_TANGO</DefineConstants>
+    <DefineConstants>DEBUG;TRACE;UNITY_5_3_OR_NEWER;UNITY_5_4_OR_NEWER;UNITY_5_5_OR_NEWER;UNITY_5_6_OR_NEWER;UNITY_2017_1_OR_NEWER;UNITY_2017_2_OR_NEWER;UNITY_2017_2_0;UNITY_2017_2;UNITY_2017;UNITY_ANALYTICS;ENABLE_AUDIO;ENABLE_CACHING;ENABLE_CLOTH;ENABLE_GENERICS;ENABLE_PVR_GI;ENABLE_MICROPHONE;ENABLE_MULTIPLE_DISPLAYS;ENABLE_PHYSICS;ENABLE_SPRITERENDERER_FLIPPING;ENABLE_SPRITES;ENABLE_GRID;ENABLE_TILEMAP;ENABLE_TERRAIN;ENABLE_RAKNET;ENABLE_DIRECTOR;ENABLE_UNET;ENABLE_LZMA;ENABLE_UNITYEVENTS;ENABLE_WEBCAM;ENABLE_WWW;ENABLE_CLOUD_SERVICES_COLLAB;ENABLE_CLOUD_SERVICES_COLLAB_SOFTLOCKS;ENABLE_CLOUD_SERVICES_ADS;ENABLE_CLOUD_HUB;ENABLE_CLOUD_PROJECT_ID;ENABLE_CLOUD_SERVICES_USE_WEBREQUEST;ENABLE_CLOUD_SERVICES_UNET;ENABLE_CLOUD_SERVICES_BUILD;ENABLE_CLOUD_LICENSE;ENABLE_EDITOR_HUB;ENABLE_EDITOR_HUB_LICENSE;ENABLE_WEBSOCKET_CLIENT;ENABLE_DIRECTOR_AUDIO;ENABLE_TIMELINE;ENABLE_EDITOR_METRICS;ENABLE_EDITOR_METRICS_CACHING;ENABLE_NATIVE_ARRAY;ENABLE_SPRITE_MASKING;INCLUDE_DYNAMIC_GI;INCLUDE_GI;ENABLE_MONO_BDWGC;PLATFORM_SUPPORTS_MONO;INCLUDE_PUBNUB;ENABLE_PLAYMODE_TESTS_RUNNER;ENABLE_VIDEO;ENABLE_RMGUI;ENABLE_PACKMAN;ENABLE_CUSTOM_RENDER_TEXTURE;ENABLE_STYLE_SHEETS;PLATFORM_ANDROID;UNITY_ANDROID;UNITY_ANDROID_API;ENABLE_SUBSTANCE;ENABLE_EGL;ENABLE_NETWORK;ENABLE_RUNTIME_GI;ENABLE_CRUNCH_TEXTURE_COMPRESSION;ENABLE_UNITYWEBREQUEST;ENABLE_CLOUD_SERVICES;ENABLE_CLOUD_SERVICES_ANALYTICS;ENABLE_EVENT_QUEUE;ENABLE_CLOUD_SERVICES_PURCHASING;ENABLE_CLOUD_SERVICES_CRASH_REPORTING;ENABLE_CLOUD_SERVICES_NATIVE_CRASH_REPORTING;PLATFORM_SUPPORTS_ADS_ID;UNITY_CAN_SHOW_SPLASH_SCREEN;ENABLE_VR;ENABLE_AR;ENABLE_SPATIALTRACKING;ENABLE_UNITYADS_RUNTIME;UNITY_UNITYADS_API;ENABLE_MONO;NET_2_0_SUBSET;ENABLE_PROFILER;UNITY_ASSERTIONS;UNITY_EDITOR;UNITY_EDITOR_64;UNITY_EDITOR_WIN;ENABLE_NATIVE_ARRAY_CHECKS;UNITY_TEAM_LICENSE;UNITY_PRO_LICENSE;UNITY_HAS_GOOGLEVR;UNITY_HAS_TANGO</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <NoWarn>0169</NoWarn>
@@ -63,6 +63,14 @@
     <Compile Include="Assets\2DDL\2DLight\Settings\SettingsWindow.cs" />
     <Compile Include="Assets\2DDL\2DLight\Settings\TagLayerClass.cs" />
     <Compile Include="Assets\2DDL\2DLight\Settings\usage.cs" />
+    <Compile Include="Assets\CameraShader\CameraFilterPack_AAA_SuperComputer.cs" />
+    <Compile Include="Assets\CameraShader\CameraFilterPack_Blur_Bloom.cs" />
+    <Compile Include="Assets\CameraShader\CameraFilterPack_Blur_BlurHole.cs" />
+    <Compile Include="Assets\CameraShader\CameraFilterPack_Blur_Dithering2x2.cs" />
+    <Compile Include="Assets\CameraShader\CameraFilterPack_Blur_Focus.cs" />
+    <Compile Include="Assets\CameraShader\CameraFilterPack_Color_Chromatic_Aberration.cs" />
+    <Compile Include="Assets\CameraShader\CameraFilterPack_Color_RGB.cs" />
+    <Compile Include="Assets\CameraShader\CameraFilterPack_Vision_Psycho.cs" />
     <Compile Include="Assets\EasyTouch\Plugins\_C#-Event-Template\C_EasyButtonTemplate.cs" />
     <Compile Include="Assets\EasyTouch\Plugins\_C#-Event-Template\C_EasyJoystickTemplate.cs" />
     <Compile Include="Assets\EasyTouch\Plugins\_C#-Event-Template\C_EasyTouchTemplate.cs" />
@@ -76,10 +84,19 @@
     <Compile Include="Assets\EasyTouch\Plugins\MonoSingleton.cs" />
     <Compile Include="Assets\EasyTouch\Plugins\MovingJoystick.cs" />
     <Compile Include="Assets\EasyTouch\Plugins\VirtualScreen.cs" />
+    <Compile Include="Assets\FixedPoint\AcosLookupTable.cs" />
+    <Compile Include="Assets\FixedPoint\Atan2LookupTable.cs" />
+    <Compile Include="Assets\FixedPoint\IntMath.cs" />
+    <Compile Include="Assets\FixedPoint\SinCosLookupTable.cs" />
+    <Compile Include="Assets\FixedPoint\VFactor.cs" />
+    <Compile Include="Assets\FixedPoint\VInt.cs" />
+    <Compile Include="Assets\FixedPoint\VInt2.cs" />
+    <Compile Include="Assets\FixedPoint\VInt3.cs" />
+    <Compile Include="Assets\FixedPoint\VLine.cs" />
+    <Compile Include="Assets\FixedPoint\VRect.cs" />
     <Compile Include="Assets\Scripts\Camera\CameraBlack.cs" />
     <Compile Include="Assets\Scripts\Camera\CameraMoveWithPlayer.cs" />
     <Compile Include="Assets\Scripts\Camera\DeathCameraFade.cs" />
-    <Compile Include="Assets\Scripts\Manager2.cs" />
     <Compile Include="Assets\Scripts\Net\Core\Connection.cs" />
     <Compile Include="Assets\Scripts\Net\Core\MsgDistribution.cs" />
     <Compile Include="Assets\Scripts\Net\Core\NetMgr.cs" />
@@ -88,37 +105,56 @@
     <Compile Include="Assets\Scripts\Net\Core\ProtocolStr.cs" />
     <Compile Include="Assets\Scripts\Net\GameMgr.cs" />
     <Compile Include="Assets\Scripts\Net\MultiBattle.cs" />
+    <Compile Include="Assets\Scripts\Net\Panel\ConfirmTipPanel.cs" />
+    <Compile Include="Assets\Scripts\Net\Panel\ConnectPanel.cs" />
     <Compile Include="Assets\Scripts\Net\Panel\LoginPanel.cs" />
     <Compile Include="Assets\Scripts\Net\Panel\PanelBase.cs" />
     <Compile Include="Assets\Scripts\Net\Panel\PanelMgr.cs" />
     <Compile Include="Assets\Scripts\Net\Panel\RegPanel.cs" />
+    <Compile Include="Assets\Scripts\Net\Panel\ResTipPanel.cs" />
+    <Compile Include="Assets\Scripts\Net\Panel\RolePanel.cs" />
     <Compile Include="Assets\Scripts\Net\Panel\RoomListPanel.cs" />
     <Compile Include="Assets\Scripts\Net\Panel\RoomPanel.cs" />
     <Compile Include="Assets\Scripts\Net\Panel\TipPanel.cs" />
     <Compile Include="Assets\Scripts\Net\Root.cs" />
     <Compile Include="Assets\Scripts\Player\BattlePlayer.cs" />
     <Compile Include="Assets\Scripts\Player\ControlKeys.cs" />
-    <Compile Include="Assets\Scripts\Player\DeathControl.cs" />
+    <Compile Include="Assets\Scripts\Player\Heroes.cs" />
     <Compile Include="Assets\Scripts\Player\JumpAgainstWall.cs" />
     <Compile Include="Assets\Scripts\Player\PlayerControl.cs" />
-    <Compile Include="Assets\Scripts\Player\ResPutUp.cs" />
-    <Compile Include="Assets\Scripts\showTest.cs" />
+    <Compile Include="Assets\Scripts\Tools\BuffDestroy.cs" />
     <Compile Include="Assets\Scripts\Tools\Bullet.cs" />
-    <Compile Include="Assets\Scripts\Tools\Gun.cs" />
+    <Compile Include="Assets\Scripts\Tools\Destroyer.cs" />
+    <Compile Include="Assets\Scripts\Tools\FlashLight.cs" />
+    <Compile Include="Assets\Scripts\Tools\LightRadius.cs" />
     <Compile Include="Assets\Scripts\Tools\ToolFloating.cs" />
-    <Compile Include="Assets\Scripts\Volume.cs" />
+    <Compile Include="Assets\Scripts\UI\BloodBar.cs" />
+    <Compile Include="Assets\Scripts\UI\DropDown.cs" />
+    <Compile Include="Assets\Scripts\UI\Health.cs" />
+    <Compile Include="Assets\Scripts\UI\PageControl.cs" />
+    <Compile Include="Assets\Scripts\UI\PagingScrollViewController.cs" />
+    <Compile Include="Assets\Scripts\UI\ViewControl.cs" />
+    <Compile Include="Assets\Scripts\UI\Volume.cs" />
     <None Include="Assets\2DDL\Shaders\StencilObject.shader" />
     <None Include="Assets\2DDL\Shaders\DefaultTexturized.shader" />
+    <None Include="Assets\CameraShader\CameraFilterPack_Vision_Psycho.shader" />
     <None Include="Assets\TexturePacker\Editor\SettingsTexturePackerImporter.txt" />
     <None Include="Assets\2DDL\Shaders\RadialGradientAlphaBlend.shader" />
+    <None Include="Assets\CameraShader\CameraFilterPack_Blur_Dithering2x2.shader" />
     <None Include="Assets\2DDL\Shaders\DepthMask.shader" />
+    <None Include="Assets\CameraShader\CameraFilterPack_AAA_SuperComputer.shader" />
     <None Include="Assets\2DDL\Shaders\CGTexturizing.shader" />
+    <None Include="Assets\CameraShader\CameraFilterPack_Blur_Focus.shader" />
     <None Include="Assets\2DDL\Shaders\OffsetShader.shader" />
     <None Include="Assets\Scripts\Camera\Test3.shader" />
     <None Include="Assets\Scripts\Camera\ImageTest.shader" />
+    <None Include="Assets\CameraShader\CameraFilterPack_Blur_Bloom.shader" />
+    <None Include="Assets\CameraShader\CameraFilterPack_Color_Chromatic_Aberration.shader" />
     <None Include="Assets\2DDL\Shaders\StencilMask.shader" />
+    <None Include="Assets\CameraShader\CameraFilterPack_Blur_BlurHole.shader" />
     <None Include="Assets\2DDL\Shaders\VertexColor.shader" />
     <None Include="Assets\2DDL\Shaders\Gradient-ZFighting.shader" />
+    <None Include="Assets\CameraShader\CameraFilterPack_Color_RGB.shader" />
     <Reference Include="Vuforia.UnityExtensions">
       <HintPath>C:/Program Files/Unity/Editor/Data/PlaybackEngines/VuforiaSupport/Managed/Runtime/Vuforia.UnityExtensions.dll</HintPath>
     </Reference>

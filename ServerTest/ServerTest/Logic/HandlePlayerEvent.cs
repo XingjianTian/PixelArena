@@ -16,7 +16,8 @@ public class HandlePlayerEvent
     public void OnLogout(Player player)
     {
         //Scene.instance.DelPlayer(player.id);
-        if(player.tempData.status==PlayerTempData.Status.InRoom)
+        if(player.tempData.status==PlayerTempData.Status.InRoomNotReady||
+            player.tempData.status == PlayerTempData.Status.InRoomReady)
         {
             var room = player.tempData.room;
             RoomMgr.Instance.LeaveRoom(player);

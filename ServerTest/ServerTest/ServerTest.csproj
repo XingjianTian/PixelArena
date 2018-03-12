@@ -88,6 +88,7 @@
   <ItemGroup>
     <Compile Include="Core\Conn.cs" />
     <Compile Include="Core\DataMgr.cs" />
+    <Compile Include="Core\LockFrame.cs" />
     <Compile Include="Core\Player.cs" />
     <Compile Include="Core\Program.cs" />
     <Compile Include="Core\ProtocolBase.cs" />

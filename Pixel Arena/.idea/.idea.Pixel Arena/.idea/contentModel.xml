@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ContentModelStore">
-    <e p="C:\Users\txj12\.Rider2017.2\system\resharper-host\local\Transient\ReSharperHost\v10\SolutionCaches\_Pixel Arena.-295320660.00" t="ExcludeRecursive" />
-    <e p="C:\Users\txj12\Documents\Unity_Projects\Pixel Arena" t="IncludeRecursive">
+    <e p="C:\Users\txj12\.Rider2017.2\system\resharper-host\local\Transient\ReSharperHost\v10\SolutionCaches\_Pixel Arena.693492821.00" t="ExcludeRecursive" />
+    <e p="C:\Users\txj12\Documents\Unity_Projects\PixelArenaGame\Pixel Arena" t="IncludeRecursive">
       <e p="Assembly-CSharp-Editor-firstpass.csproj" t="IncludeRecursive" />
       <e p="Assembly-CSharp-Editor.csproj" t="IncludeRecursive" />
       <e p="Assembly-CSharp.csproj" t="IncludeRecursive" />
@@ -46,6 +46,24 @@
             <e p="VertexColor.shader" t="Include" />
           </e>
         </e>
+        <e p="CameraShader" t="Include">
+          <e p="CameraFilterPack_AAA_SuperComputer.cs" t="Include" />
+          <e p="CameraFilterPack_AAA_SuperComputer.shader" t="Include" />
+          <e p="CameraFilterPack_Blur_Bloom.cs" t="Include" />
+          <e p="CameraFilterPack_Blur_Bloom.shader" t="Include" />
+          <e p="CameraFilterPack_Blur_BlurHole.cs" t="Include" />
+          <e p="CameraFilterPack_Blur_BlurHole.shader" t="Include" />
+          <e p="CameraFilterPack_Blur_Dithering2x2.cs" t="Include" />
+          <e p="CameraFilterPack_Blur_Dithering2x2.shader" t="Include" />
+          <e p="CameraFilterPack_Blur_Focus.cs" t="Include" />
+          <e p="CameraFilterPack_Blur_Focus.shader" t="Include" />
+          <e p="CameraFilterPack_Color_Chromatic_Aberration.cs" t="Include" />
+          <e p="CameraFilterPack_Color_Chromatic_Aberration.shader" t="Include" />
+          <e p="CameraFilterPack_Color_RGB.cs" t="Include" />
+          <e p="CameraFilterPack_Color_RGB.shader" t="Include" />
+          <e p="CameraFilterPack_Vision_Psycho.cs" t="Include" />
+          <e p="CameraFilterPack_Vision_Psycho.shader" t="Include" />
+        </e>
         <e p="EasyTouch" t="Include">
           <e p="Plugins" t="Include">
             <e p="_C#-Event-Template" t="Include">
@@ -75,6 +93,18 @@
             <e p="VirtualScreen.cs" t="Include" />
           </e>
         </e>
+        <e p="FixedPoint" t="Include">
+          <e p="AcosLookupTable.cs" t="Include" />
+          <e p="Atan2LookupTable.cs" t="Include" />
+          <e p="IntMath.cs" t="Include" />
+          <e p="SinCosLookupTable.cs" t="Include" />
+          <e p="VFactor.cs" t="Include" />
+          <e p="VInt.cs" t="Include" />
+          <e p="VInt2.cs" t="Include" />
+          <e p="VInt3.cs" t="Include" />
+          <e p="VLine.cs" t="Include" />
+          <e p="VRect.cs" t="Include" />
+        </e>
         <e p="Plugins" t="Include">
           <e p="Editor" t="Include">
             <e p="JetBrains" t="Include">
@@ -90,7 +120,6 @@
             <e p="ImageTest.shader" t="Include" />
             <e p="Test3.shader" t="Include" />
           </e>
-          <e p="Manager2.cs" t="Include" />
           <e p="Net" t="Include">
             <e p="Core" t="Include">
               <e p="Connection.cs" t="Include" />
@@ -103,10 +132,14 @@
             <e p="GameMgr.cs" t="Include" />
             <e p="MultiBattle.cs" t="Include" />
             <e p="Panel" t="Include">
+              <e p="ConfirmTipPanel.cs" t="Include" />
+              <e p="ConnectPanel.cs" t="Include" />
               <e p="LoginPanel.cs" t="Include" />
               <e p="PanelBase.cs" t="Include" />
               <e p="PanelMgr.cs" t="Include" />
               <e p="RegPanel.cs" t="Include" />
+              <e p="ResTipPanel.cs" t="Include" />
+              <e p="RolePanel.cs" t="Include" />
               <e p="RoomListPanel.cs" t="Include" />
               <e p="RoomPanel.cs" t="Include" />
               <e p="TipPanel.cs" t="Include" />
@@ -116,18 +149,27 @@
           <e p="Player" t="Include">
             <e p="BattlePlayer.cs" t="Include" />
             <e p="ControlKeys.cs" t="Include" />
-            <e p="DeathControl.cs" t="Include" />
+            <e p="Heroes.cs" t="Include" />
             <e p="JumpAgainstWall.cs" t="Include" />
             <e p="PlayerControl.cs" t="Include" />
-            <e p="ResPutUp.cs" t="Include" />
           </e>
-          <e p="showTest.cs" t="Include" />
           <e p="Tools" t="Include">
+            <e p="BuffDestroy.cs" t="Include" />
             <e p="Bullet.cs" t="Include" />
-            <e p="Gun.cs" t="Include" />
+            <e p="Destroyer.cs" t="Include" />
+            <e p="FlashLight.cs" t="Include" />
+            <e p="LightRadius.cs" t="Include" />
             <e p="ToolFloating.cs" t="Include" />
           </e>
-          <e p="Volume.cs" t="Include" />
+          <e p="UI" t="Include">
+            <e p="BloodBar.cs" t="Include" />
+            <e p="DropDown.cs" t="Include" />
+            <e p="Health.cs" t="Include" />
+            <e p="PageControl.cs" t="Include" />
+            <e p="PagingScrollViewController.cs" t="Include" />
+            <e p="ViewControl.cs" t="Include" />
+            <e p="Volume.cs" t="Include" />
+          </e>
         </e>
         <e p="TexturePacker" t="Include">
           <e p="Editor" t="Include">

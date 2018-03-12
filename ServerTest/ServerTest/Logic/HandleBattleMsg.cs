@@ -12,7 +12,7 @@ public partial class HandlePlayerMsg
         ProtocolBytes protocol = new ProtocolBytes();
         protocol.AddString("StartFight");
         //条件判断
-        if (player.tempData.status != PlayerTempData.Status.InRoom)
+        if (player.tempData.status != PlayerTempData.Status.InRoomReady)
         {
             Console.WriteLine("MsgStartFight status error " + player.id);
             protocol.AddInt(-1);
@@ -40,6 +40,74 @@ public partial class HandlePlayerMsg
         //
         room.StartFight();
     }
+    //非房主玩家准备
+    public void MsgChangeRState(Player player,ProtocolBase protoBase)
+    {
+        ProtocolBytes protocol = (ProtocolBytes)protoBase;
+        int start = 0;
+        string protoname = protocol.GetString(start, ref start);
+        int changestateprefabnum = protocol.GetInt(start, ref start);
+        ProtocolBytes protocolret = new ProtocolBytes();
+        protocolret.AddString("ChangeRState");
+        protocolret.AddInt(changestateprefabnum);
+        if (player.tempData.status != PlayerTempData.Status.InRoomNotReady &&
+            player.tempData.status != PlayerTempData.Status.InRoomReady)
+            return;
+        Console.WriteLine("playersChangeStateNum " + changestateprefabnum);
+        player.tempData.status = player.tempData.status==PlayerTempData.Status.InRoomReady?
+            PlayerTempData.Status.InRoomNotReady: PlayerTempData.Status.InRoomReady;
+        Room room = player.tempData.room;
+        room.Broadcast(protocolret);
+        
+    }
+    //房主玩家改变地图
+    public void MsgSwitchMap(Player player,ProtocolBase protoBase)
+    {
+        ProtocolBytes protocol = (ProtocolBytes)protoBase;
+        int start = 0;
+        string protoname = protocol.GetString(start, ref start);
+        int changetomap = protocol.GetInt(start, ref start);
+        ProtocolBytes protocolret = new ProtocolBytes();
+        protocolret.AddString("SwitchMap");
+        protocolret.AddInt(changetomap);
+        if (player.tempData.status != PlayerTempData.Status.InRoomNotReady &&
+           player.tempData.status != PlayerTempData.Status.InRoomReady)
+            return;
+
+        Room room = player.tempData.room;
+        Console.Write("OriginalMap " + room.MapType);
+        room.MapType = changetomap;
+        Console.WriteLine(" ChangesTo " + room.MapType);
+        room.Broadcast(protocolret);
+    }
+    //乐观帧处理操作
+    public void MsgOps(Player player, ProtocolBase protoBase)
+    {
+        //旧版：每帧更新所有操作
+        /*
+        int[] cmd = new int[5];
+        //获取数值
+        int start = 0;
+        ProtocolBytes protocol = (ProtocolBytes)protoBase;
+        string protoName = protocol.GetString(start, ref start);
+        for (int i = 0; i < 5; ++i)
+            cmd[i] = protocol.GetInt(start, ref start);
+        player.tempData.room.lf.update_lockstep_data(player, cmd);*/
+        int start = 0;
+        ProtocolBytes protocol = (ProtocolBytes)protoBase;
+        string protoName = protocol.GetString(start, ref start);
+        int optochange = protocol.GetInt(start, ref start);
+        int changeto = protocol.GetInt(start, ref start);
+        if (optochange < 0 || optochange > 4)
+            return;
+        player.tempData.room.lf.Update_lockstep_data(player, optochange,changeto);
+        
+    }
+    public void MsgESoilder(Player player,ProtocolBase protoBase)
+    {
+        float afterhealinghp = player.tempData.currentHp + 60;
+        player.tempData.currentHp = Math.Min(afterhealinghp, player.tempData.maxHp);
+    }
     //hit协议
     /*客户端发送enemyid，damage
       服务器广播 id enemyid damage*/
@@ -51,15 +119,18 @@ public partial class HandlePlayerMsg
         string protoName = protocol.GetString(start, ref start);
         string enemyID = protocol.GetString(start, ref start);
         float damage = protocol.GetFloat(start, ref start);
+        /*
         //作弊校验
-        long lastShootTime = player.tempData.lastShootTime;
-        if(Sys.GetTimeStamp()-lastShootTime<1)
+        if (enemyID != player.id)//非中毒情况
         {
-            Console.WriteLine("MsgHit 开炮作弊 " + player.id);
-            return;
-        }
-        player.tempData.lastShootTime = Sys.GetTimeStamp();
-        //更多作弊校验 略
+            long lastShootTime = player.tempData.lastShootTime;
+            if (Sys.GetTimeStamp() - lastShootTime < 1)
+            {
+                Console.WriteLine("MsgHit 开炮作弊 " + player.id);
+                return;
+            }
+            player.tempData.lastShootTime = Sys.GetTimeStamp();
+        }*/
         //获取房间
         if (player.tempData.status != PlayerTempData.Status.InGame)
             return;
@@ -71,12 +142,10 @@ public partial class HandlePlayerMsg
             return;
         }
         Player enemy = room.list[enemyID];
-        if (enemy == null)
+        if (enemy == null|| enemy.tempData.currentHp <= 0)
             return;
-        if (enemy.tempData.hp <= 0)
-            return;
-        enemy.tempData.hp -= damage;
-        Console.WriteLine("MsgHit " + enemyID + " hp" + enemy.tempData.hp);
+        enemy.tempData.currentHp -= damage;
+        Console.WriteLine("MsgHit " + enemyID + " hp" + enemy.tempData.currentHp);
         //广播
         ProtocolBytes protocolRet = new ProtocolBytes();
         protocolRet.AddString("Hit");
@@ -87,93 +156,20 @@ public partial class HandlePlayerMsg
         //胜负判断
         room.UpdateWin();
     }
-    //动画协议
-    public void MsgAnim(Player player,ProtocolBase protobase)
-    {
-        //获取数值
-        int start = 0;
-        ProtocolBytes protocol = (ProtocolBytes)protobase;
-        string protoName = protocol.GetString(start, ref start);
-        string animname = protocol.GetString(start, ref start);
-        if (player.tempData.status != PlayerTempData.Status.InGame)
-            return;
-        Room room = player.tempData.room;
-        //广播
-        ProtocolBytes protocolRet = new ProtocolBytes();
-        protocolRet.AddString("Anim");
-        protocolRet.AddString(player.id);
-        protocolRet.AddString(animname);
-        room.Broadcast(protocolRet);
-    }
     public void MsgLeaveBattle(Player player,ProtocolBase protobase)
     {
         //获取数值
-        int start = 0;
-        ProtocolBytes protocol = (ProtocolBytes)protobase;
-        string protoName = protocol.GetString(start, ref start);
         if (player.tempData.status != PlayerTempData.Status.InGame)
             return;
-        player.tempData.status = PlayerTempData.Status.InRoom;
-    }
-    public void MsgShooting(Player player,ProtocolBase protoBase)
-    {
-        //获取数值
-        int start = 0;
-        ProtocolBytes protocol = (ProtocolBytes)protoBase;
-        string protoName = protocol.GetString(start, ref start);
-        float posX = protocol.GetFloat(start, ref start);
-        float posY = protocol.GetFloat(start, ref start);
-        float rotX = protocol.GetFloat(start, ref start);
-        float rotY = protocol.GetFloat(start, ref start);
-        float rotZ = protocol.GetFloat(start, ref start);
-        int ifflip = protocol.GetInt(start, ref start);
-        if (player.tempData.status != PlayerTempData.Status.InGame)
-            return;
+        if(player.tempData.isOwner==true)
+            player.tempData.status = PlayerTempData.Status.InRoomReady;
+        else
+            player.tempData.status = PlayerTempData.Status.InRoomNotReady;
         Room room = player.tempData.room;
-        //广播
-        ProtocolBytes protocolRet = new ProtocolBytes();
-        protocolRet.AddString("Shooting");
-        protocolRet.AddString(player.id);
-        protocolRet.AddFloat(posX);
-        protocolRet.AddFloat(posY);
-        protocolRet.AddFloat(rotX);
-        protocolRet.AddFloat(rotY);
-        protocolRet.AddFloat(rotZ);
-        protocolRet.AddInt(ifflip);
-        room.Broadcast(protocolRet);
-    }
-    //同步报告角色单元信息
-    public void MsgUpdateUnitInfo(Player player,ProtocolBase protoBase)
-    {
-        //获取数值
-        int start = 0;
-        ProtocolBytes protocol = (ProtocolBytes)protoBase;
-        string protoName = protocol.GetString(start, ref start);
-        float posX = protocol.GetFloat(start, ref start);
-        float posY = protocol.GetFloat(start, ref start);
-        float rotX = protocol.GetFloat(start, ref start);
-        float rotY = protocol.GetFloat(start, ref start);
-        float rotZ = protocol.GetFloat(start, ref start);
-        int ifFlip = protocol.GetInt(start, ref start);
-        float speed = protocol.GetFloat(start, ref start);
-        //获取房间
-        if (player.tempData.status != PlayerTempData.Status.InGame)
-            return;
-        Room room = player.tempData.room;
-        player.tempData.posX = posX;
-        player.tempData.posY = posY;
-        player.tempData.lastUpdateTime = Sys.GetTimeStamp();
-        //广播
-        ProtocolBytes protocolRet = new ProtocolBytes();
-        protocolRet.AddString("UpdateUnitInfo");
-        protocolRet.AddString(player.id);
-        protocolRet.AddFloat(posX);
-        protocolRet.AddFloat(posY);
-        protocolRet.AddFloat(rotX);
-        protocolRet.AddFloat(rotY);
-        protocolRet.AddFloat(rotZ);
-        protocolRet.AddInt(ifFlip);
-        protocolRet.AddFloat(speed);
-        room.Broadcast(protocolRet);
+        if (room != null)
+        {
+            Console.WriteLine("check leave battle");
+            room.Broadcast(room.GetRoomInfo());
+        }
     }
 }

@@ -1,10 +1,9 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
-public class GameMgr : MonoBehaviour {
-
-	public static GameMgr Instance
+public class GameMgr : MonoBehaviour
+{
+    public static GameMgr Instance;
+    /*
 	{
 		get{return Nested.instance;}
 	}
@@ -13,19 +12,11 @@ public class GameMgr : MonoBehaviour {
 	{
 		static Nested() { }
 		internal static readonly GameMgr instance = new GameMgr();
-	}
+	}*/
+    
     public string id = "PixelArenaGame";
-
     private void Awake()
     {
-
+        Instance = this;
     }
-    // Use this for initialization
-    void Start () {
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
 }

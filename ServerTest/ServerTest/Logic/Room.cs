@@ -3,8 +3,10 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
-
+using System.Timers;
+//using pair = System.Collections.Generic.KeyValuePair<string, Player>;
 
 public class Room
 {
@@ -16,24 +18,44 @@ public class Room
     }
     public Status status = Status.Prepare;
     //玩家
-    public int MaxPlayers = 6;
+    public int MaxPlayers = 4;
+    //map
+    public int MapType = 0;
     public Dictionary<string, Player> list = new Dictionary<string, Player>();
+    public LockFrame lf = new LockFrame();
 
+    Thread FrameSend;
+    Thread CreateBuff;
+    Random rd = new Random();
     //添加玩家
-    public bool AddPlayer(Player player)
+    public bool AddPlayer(Player player,int herotype)
     {
-        lock(list)
+        lock (list)
         {
-            if(list.Count>=MaxPlayers)
+            if (list.Count >= MaxPlayers)
                 return false;
             PlayerTempData tempData = player.tempData;
             tempData.room = this;
             tempData.team = SwitchTeam();
-            tempData.status = PlayerTempData.Status.InRoom;
+            tempData.herotype = herotype;
+            switch(herotype)
+            {
+                case 0:tempData.maxHp = 150;break;//solider
+                case 1:tempData.maxHp = 100;break;//ninja
+                case 2:tempData.maxHp = 250;break;//roshan
+            }
             if (list.Count == 0)
+            {
                 tempData.isOwner = true;
+                tempData.status = PlayerTempData.Status.InRoomReady;
+            }
+            else
+            {
+                tempData.isOwner = false;
+                tempData.status = PlayerTempData.Status.InRoomNotReady;
+            }
             string id = player.id;
-            list.Add(id, player);
+            list.Add(id,player);
         }
         return true;
     }
@@ -43,15 +65,23 @@ public class Room
     {
         int count1 = 0;
         int count2 = 0;
+        int count3 = 0;
+        int count4 = 0;
         foreach (Player player in list.Values)
         {
             if (player.tempData.team == 1) count1++;
-            if (player.tempData.team == 2) count2++;
+            else if (player.tempData.team == 2) count2++;
+            else if (player.tempData.team == 3) count3++;
+            else count4++;
         }
-        if (count1 <= count2)
+        if (count1 < 1)
             return 1;
-        else
+        else if (count2 < 1)
             return 2;
+        else if (count3 < 1)
+            return 3;
+        else
+            return 4;
     }
     //删除玩家
     public void DelPlayer(string id)
@@ -61,7 +91,7 @@ public class Room
             if (!list.ContainsKey(id))
                 return;
             bool isOwner = list[id].tempData.isOwner;
-            list[id].tempData.status = PlayerTempData.Status.None;
+            list[id].tempData.status = PlayerTempData.Status.OutOfRoom;
             list.Remove(id);
             if (isOwner)
                 UpdateOwner();
@@ -80,6 +110,7 @@ public class Room
             }
             Player p = list.Values.First();
             p.tempData.isOwner = true;
+            p.tempData.status = PlayerTempData.Status.InRoomReady;
         }
     }
 
@@ -99,21 +130,24 @@ public class Room
         //房间信息
         protocol.AddInt(list.Count);
         //每个玩家的消息
-        foreach (Player p in list.Values)
+        foreach (var items in list)
         {
+            var p = items.Value;
             protocol.AddString(p.id);
             protocol.AddInt(p.tempData.team);
-            protocol.AddFloat(p.data.kd);
+            protocol.AddInt(p.tempData.herotype);
             int isOwner = p.tempData.isOwner ? 1 : 0;
             protocol.AddInt(isOwner);
+            Console.WriteLine(p.id+(isOwner>0?"是房主":"不是"));
             int state = -1 ;
             switch (p.tempData.status)
             {
-                case PlayerTempData.Status.None: state = 0; break;
-                case PlayerTempData.Status.InRoom:state = 1;break;
+                case PlayerTempData.Status.InRoomNotReady: state = 0; break;
+                case PlayerTempData.Status.InRoomReady:state = 1;break;
                 case PlayerTempData.Status.InGame:state = 2;break;
             }
             protocol.AddInt(state);
+            protocol.AddInt(MapType);
         }
         return protocol;
     }
@@ -129,14 +163,14 @@ public class Room
         {
             if (player.tempData.team == 1) count1++;
             if (player.tempData.team == 2) count2++;
-            if (player.tempData.status == PlayerTempData.Status.InGame)
+            if (player.tempData.status == PlayerTempData.Status.InGame||
+                player.tempData.status==PlayerTempData.Status.InRoomNotReady)
                 return false;
         }
         if (count1 < 1 || count2 < 1)
             return false;
         return true;
     }
-
     //开战
     public void StartFight()
     {
@@ -145,23 +179,73 @@ public class Room
         status = Status.InGame;
         int teamPos1 = 1;
         int teamPos2 = 1;
-        lock(list)
+        int teamPos3 = 1;
+        int teamPos4 = 1;
+        lock (list)
         {
             protocol.AddInt(list.Count);
+            protocol.AddInt(MapType);
             foreach (Player p in list.Values)
             {
-                p.tempData.hp = 100;
+                p.tempData.currentHp = p.tempData.maxHp;
                 protocol.AddString(p.id);
                 protocol.AddInt(p.tempData.team);
+
                 if (p.tempData.team == 1)
                     protocol.AddInt(teamPos1++);
-                else
+                else if(p.tempData.team ==2)
                     protocol.AddInt(teamPos2++);
+                else if (p.tempData.team == 3)
+                    protocol.AddInt(teamPos3++);
+                else if (p.tempData.team == 4)
+                    protocol.AddInt(teamPos4++);
+
+                protocol.AddInt(p.tempData.herotype);
                 p.tempData.status = PlayerTempData.Status.InGame;
             }
         }
         Broadcast(protocol);
+
+        //lockframe初始化
+        lf.initialize(list);
+        FrameSend = new Thread(lockframesend);
+        FrameSend.Start();
+        CreateBuff = new Thread(CreateBuffStone);
+        CreateBuff.Start();
     }
+    
+    private void lockframesend()
+    {
+        System.Timers.Timer t = new System.Timers.Timer(20);//实例化，设置间隔时间；
+        t.Elapsed += new System.Timers.ElapsedEventHandler(theout);//到达时间的时候执行事件；
+        t.AutoReset = true;//设置是执行一次（false）还是一直执行(true)；
+        t.Enabled = true;//是否执行System.Timers.Timer.Elapsed事件；
+    }
+    void theout(object source, System.Timers.ElapsedEventArgs e)
+    {
+        lf.SendPerFrame(this);
+    }
+    private void CreateBuffStone()
+    {
+        System.Timers.Timer t = new System.Timers.Timer(15000);//实例化，设置间隔时间；
+        t.Elapsed += new System.Timers.ElapsedEventHandler(CreateB);//到达时间的时候执行事件；
+        t.AutoReset = true;//设置是执行一次（false）还是一直执行(true)；
+        t.Enabled = true;//是否执行System.Timers.Timer.Elapsed事件
+    }
+    //每15s
+    void CreateB(object source, System.Timers.ElapsedEventArgs e)
+    {
+        
+        //前闭后开
+        int randpos = rd.Next(0, 4);
+        int bufftype = rd.Next(0, 5);
+        ProtocolBytes protocolret = new ProtocolBytes();
+        protocolret.AddString("CreateBuff");
+        protocolret.AddInt(randpos);
+        protocolret.AddInt(bufftype);
+        Broadcast(protocolret);
+    }
+
     //胜负判断
     public int IsWin()
     {
@@ -172,8 +256,8 @@ public class Room
         foreach(Player player in list.Values)
         {
             PlayerTempData pt = player.tempData;
-            if (pt.team == 1 && pt.hp > 0) count1++;
-            if (pt.team == 2 && pt.hp > 0) count2++;
+            if (pt.team == 1 && pt.currentHp > 0) count1++;
+            if (pt.team == 2 && pt.currentHp > 0) count2++;
         }
         if (count1 <= 0) return 2;
         if (count2 <= 0) return 1;
@@ -191,6 +275,7 @@ public class Room
             status = Status.Prepare;
             foreach (Player player in list.Values)
             {
+               // player.tempData.currentHp = player.tempData.maxHp;
                 if (player.tempData.team == isWin)
                     player.data.killNum++;
                 else
@@ -202,14 +287,17 @@ public class Room
         protocol.AddString("Result");
         protocol.AddInt(isWin);
         Broadcast(protocol);
-
+        Console.WriteLine("check update battle");
+        FrameSend.Abort();
+        lf.Clean_lockstep_data();
+        
     }
     //中途退出战斗
     public void ExitFight(Player player)
     {
         //摧毁角色
         if (list[player.id] != null)
-            list[player.id].tempData.hp = -1;
+            list[player.id].tempData.currentHp = -1;
         //广播消息
         ProtocolBytes protocol = new ProtocolBytes();
         protocol.AddString("Hit");

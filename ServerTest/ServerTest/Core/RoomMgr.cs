@@ -22,20 +22,21 @@ public class RoomMgr
     public List<Room> list = new List<Room>();
 
     //创建房间
-    public void CreateRoom(Player player)
+    public void CreateRoom(Player player,int herotype,int maptype)
     {
         Room room = new Room();
         lock(list)
         {
+            room.MapType = maptype;
             list.Add(room);
-            room.AddPlayer(player);
+            room.AddPlayer(player,herotype);
         }
     }
     //离开房间
     public void LeaveRoom(Player player)
     {
         var tempData = player.tempData;
-        if (tempData.status == PlayerTempData.Status.None)
+        if (tempData.status == PlayerTempData.Status.OutOfRoom)
             return;
         Room room = tempData.room;
         lock(list)
@@ -57,6 +58,7 @@ public class RoomMgr
         {
             protocol.AddInt(room.list.Count);
             protocol.AddInt((int)room.status);
+            protocol.AddInt(room.MapType);
         }
         return protocol;
     }

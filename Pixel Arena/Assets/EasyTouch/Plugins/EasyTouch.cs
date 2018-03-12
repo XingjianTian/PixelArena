@@ -202,7 +202,6 @@
 /// 		- Add method (GetSwipeOrDragAngle()) that return the swipe or drag angle in degree
 
 using UnityEngine;
-using System.Collections;
 using System.Collections.Generic;
 
 /// <summary>

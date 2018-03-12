@@ -24,3 +24,17 @@ C:\Users\txj12\Documents\Visual Studio 2017\Projects\C sharp\ServerTest\ServerTe
 C:\Users\txj12\Documents\Visual Studio 2017\Projects\C sharp\ServerTest\ServerTest\bin\Debug\MySql.Data.xml
 C:\Users\txj12\Documents\Visual Studio 2017\Projects\C sharp\ServerTest\ServerTest\bin\Debug\MySql.Data.Entity.EF6.xml
 C:\Users\txj12\Documents\Visual Studio 2017\Projects\C sharp\ServerTest\ServerTest\bin\Debug\MySql.Web.xml
+C:\Users\txj12\Documents\Unity_Projects\PixelArenaGame\ServerTest\ServerTest\bin\Debug\ServerTest.exe.config
+C:\Users\txj12\Documents\Unity_Projects\PixelArenaGame\ServerTest\ServerTest\bin\Debug\ServerTest.exe
+C:\Users\txj12\Documents\Unity_Projects\PixelArenaGame\ServerTest\ServerTest\bin\Debug\ServerTest.pdb
+C:\Users\txj12\Documents\Unity_Projects\PixelArenaGame\ServerTest\ServerTest\bin\Debug\MySql.Data.dll
+C:\Users\txj12\Documents\Unity_Projects\PixelArenaGame\ServerTest\ServerTest\bin\Debug\MySql.Data.Entity.EF6.dll
+C:\Users\txj12\Documents\Unity_Projects\PixelArenaGame\ServerTest\ServerTest\bin\Debug\MySql.Web.dll
+C:\Users\txj12\Documents\Unity_Projects\PixelArenaGame\ServerTest\ServerTest\bin\Debug\MySql.Data.xml
+C:\Users\txj12\Documents\Unity_Projects\PixelArenaGame\ServerTest\ServerTest\bin\Debug\MySql.Data.Entity.EF6.xml
+C:\Users\txj12\Documents\Unity_Projects\PixelArenaGame\ServerTest\ServerTest\bin\Debug\MySql.Web.xml
+C:\Users\txj12\Documents\Unity_Projects\PixelArenaGame\ServerTest\ServerTest\obj\Debug\ServerTest.csprojResolveAssemblyReference.cache
+C:\Users\txj12\Documents\Unity_Projects\PixelArenaGame\ServerTest\ServerTest\obj\Debug\ServerTest.csproj.ServerTest.exe.config
+C:\Users\txj12\Documents\Unity_Projects\PixelArenaGame\ServerTest\ServerTest\obj\Debug\ServerTest.csproj.CoreCompileInputs.cache
+C:\Users\txj12\Documents\Unity_Projects\PixelArenaGame\ServerTest\ServerTest\obj\Debug\ServerTest.exe
+C:\Users\txj12\Documents\Unity_Projects\PixelArenaGame\ServerTest\ServerTest\obj\Debug\ServerTest.pdb

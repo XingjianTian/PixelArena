@@ -1,12 +1,10 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using System;
+﻿using System.Collections.Generic;
+
 //消息分发
 public class MsgDistribution
 {
     //每一帧处理消息的数量
-    public int num = 15;
+    public int num = 20;
     //消息列表
     public List<ProtocolBase> msgList = new List<ProtocolBase>();
     //委托类型，处理协议类型
@@ -36,17 +34,17 @@ public class MsgDistribution
     public void DispatchMsgEvent(ProtocolBase protocol)
     {
         string name = protocol.GetName();
-        Debug.Log("分发处理消息 " + name);
+        if (name == null)
+            return;
         if(eventDict.ContainsKey(name))
         {
             eventDict[name](protocol);
         }
-        if(onceDict.ContainsKey(name))
-        {
-            onceDict[name](protocol);
-            onceDict[name] = null;
-            onceDict.Remove(name);
-        }
+        if (!onceDict.ContainsKey(name)) 
+            return;
+        onceDict[name](protocol);
+        onceDict[name] = null;
+        onceDict.Remove(name);
     }
 
     //添加监听事件

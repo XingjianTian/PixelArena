@@ -56,29 +56,6 @@ public partial class HandlePlayerMsg
             Scene.Instance.SendPlayerList(player);
         }
 
-        /*更新信息
-        public void MsgUpdateInfo(Player player,ProtocolBase protoBase)
-        {
-            //获取数值
-            int start = 0;
-            ProtocolBytes protocol = (ProtocolBytes)protoBase;
-            string protoName = protocol.GetString(start, ref start);
-            float x = protocol.GetFloat(start, ref start);
-            float y = protocol.GetFloat(start, ref start);
-            int killnum = player.data.killNum;
-            int killednum = player.data.killedNum;
-            Scene.Instance.UpdateInfo(player.id, x, y, killnum, killednum);
-            //广播
-            ProtocolBytes protocolRet = new ProtocolBytes();
-            protocolRet.AddString("UpdateInfo");
-            protocolRet.AddString(player.id);
-            protocolRet.AddFloat(x);
-            protocolRet.AddFloat(y);
-            protocolRet.AddInt(killnum);
-            protocolRet.AddInt(killednum);
-            ServNet.instance.BroadCast(protocolRet);
-        }
-        */
     //查询Career
     public void MsgGetAchieve(Player player,ProtocolBase protocol)
     {
@@ -86,7 +63,6 @@ public partial class HandlePlayerMsg
         protocolRet.AddString("GetAchieve");
         protocolRet.AddFloat(player.data.kd);
         protocolRet.AddFloat(player.data.winpercentage);
-        protocolRet.AddInt(player.data.bestkill);
         protocolRet.AddInt(player.data.killNum);
         protocolRet.AddInt(player.data.killedNum);
         player.Send(protocolRet);

@@ -1,12 +1,10 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 public class DeathCameraFade : MonoBehaviour
 {
     public static DeathCameraFade Instance;
-    public GameObject Player;
-    public DeathControl dc;
+    public PlayerControl pc;
     public Shader curShader;
+    public bool ifflash = false;
     public float grayScaleAmount = 1.0f;
     private Material curMaterial;
     public Material material
@@ -26,8 +24,7 @@ public class DeathCameraFade : MonoBehaviour
         //if (Player.GetComponent<DeathControl>().ifdead == true)
         // {
 	    Instance = this;
-        Player = gameObject.GetComponent<CameraMoveWithPlayer>().character.gameObject;
-	    dc = Player != null ? Player.GetComponent<DeathControl>() : null;
+        pc = MultiBattle.Instance.list[GameMgr.Instance.id].Player;
             if (SystemInfo.supportsImageEffects == false)
             {
                 enabled = false;
@@ -52,22 +49,26 @@ public class DeathCameraFade : MonoBehaviour
     }
     void OnRenderImage(RenderTexture sourceTexture,RenderTexture destTexture)
     {
-            if (curShader != null&&dc!=null&&dc.ifdead == true&&dc.isgrounded == true)
+            if (curShader != null&&pc!=null&&pc.ifdead&&pc.grounded)
         {
             material.SetFloat("_LuminosityAmount", grayScaleAmount);
                 Graphics.Blit(sourceTexture, destTexture, material);
 
             }
-            /*
-            else if(curShader!=null&&mbm.iffade==true)
+            
+            else if(curShader!=null&&ifflash==true)
             {
                 material.SetFloat("_LuminosityAmount", grayScaleAmount);
                 Graphics.Blit(sourceTexture, destTexture, material);
-                
-            }*/
+                Invoke("ChangeColor", 0.15f);
+            }
             else
             {
                 Graphics.Blit(sourceTexture, destTexture);
             }
+    }
+    void ChangeColor()
+    {
+        ifflash = false;
     }
 }

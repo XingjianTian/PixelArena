@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -55,7 +54,6 @@ public class PanelMgr : MonoBehaviour {
         string name = typeof(T).ToString();
         if (dict.ContainsKey(name))
             return;
-
         //给Canvas添加面板脚本
         PanelBase panel = canvas.AddComponent<T>();
         panel.Init(args);

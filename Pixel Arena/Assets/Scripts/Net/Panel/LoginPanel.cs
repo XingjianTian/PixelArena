@@ -1,17 +1,13 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 
 public class LoginPanel : PanelBase
 {
     private InputField idInput;
     private InputField pwInput;
-    private InputField IPAdressInput;
-    private InputField PortInput;
     private Button loginBtn;
     private Button regBtn;
-
+    private Button cloBtn;
     #region 生命周期
     //初始化
     public override void Init(params object[] args)
@@ -27,13 +23,12 @@ public class LoginPanel : PanelBase
         Transform skinTrans = skin.transform;
         idInput = skinTrans.Find("UsernameInput").GetComponent<InputField>();
         pwInput = skinTrans.Find("PassWordInput").GetComponent<InputField>();
-        IPAdressInput = skinTrans.Find("IPAdressInput").GetComponent<InputField>();
-        PortInput = skinTrans.Find("PortInput").GetComponent<InputField>();
         loginBtn = skinTrans.Find("LoginButton").GetComponent<Button>();
         regBtn = skinTrans.Find("RegisterButton").GetComponent<Button>();
-        
+        cloBtn = skinTrans.Find("CloseButton").GetComponent<Button>();
         loginBtn.onClick.AddListener(OnLoginClick);
         regBtn.onClick.AddListener(OnRegClick);
+        cloBtn.onClick.AddListener(OnCloseClick);
     }
 
 
@@ -42,34 +37,30 @@ public class LoginPanel : PanelBase
     //注册回调函数
     public void OnRegClick()
     {
+        AudioSource.PlayClipAtPoint(Volume.instance.Events[0],Camera.main.transform.position);
         PanelMgr.instance.OpenPanel<RegPanel>("");
         Close();
     }
 
+    public void OnCloseClick()
+    {
+        AudioSource.PlayClipAtPoint(Volume.instance.Events[0],Camera.main.transform.position);
+        NetMgr.srvConn.Close();
+        PanelMgr.instance.OpenPanel<ConnectPanel>("");
+        Close();
+    }
 
     //登录回调函数
     public void OnLoginClick()
     {
+        AudioSource.PlayClipAtPoint(Volume.instance.Events[0],Camera.main.transform.position);
         //前端校验
         //用户名密码为空
-        if (IPAdressInput.text == "" || PortInput.text == "")
-        {
-            PanelMgr.instance.OpenPanel<TipPanel>("","IP地址或端口号不能为空！");
-            return; 
-        }
         if(idInput.text==""||pwInput.text=="")
         {
             //Debug.Log("用户名密码不能为空！");
-            PanelMgr.instance.OpenPanel<TipPanel>("","用户名或密码不能为空！");
+            PanelMgr.instance.OpenPanel<TipPanel>("","Please Enter rightly!");
             return; 
-        }
-        if(NetMgr.srvConn.status!=Connection.Status.Connected)
-        {
-            string host = IPAdressInput.text;
-            int port =int.Parse(PortInput.text);
-            NetMgr.srvConn.proto = new ProtocolBytes();
-            if(!NetMgr.srvConn.Connect(host, port))
-                PanelMgr.instance.OpenPanel<TipPanel>("", "连接服务器失败！");
         }
         //发送
         ProtocolBytes protocol = new ProtocolBytes();
@@ -88,15 +79,15 @@ public class LoginPanel : PanelBase
             
             if (ret == 0)
             {
-                PanelMgr.instance.OpenPanel<TipPanel>("", "登陆成功！");
+                //PanelMgr.instance.OpenPanel<TipPanel>("", "登陆成功！");
                 //开始游戏
-                PanelMgr.instance.OpenPanel<RoomListPanel>("");
+                PanelMgr.instance.OpenPanel<RolePanel>("");
                 GameMgr.Instance.id = idInput.text;//唯一id
                 Close();
             }
             else
             {
-                PanelMgr.instance.OpenPanel<TipPanel>("", "用户名或密码错误！");
+                PanelMgr.instance.OpenPanel<TipPanel>("", "Please Enter rightly!");
             }
         });
 

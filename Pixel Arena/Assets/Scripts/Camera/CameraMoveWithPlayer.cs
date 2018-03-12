@@ -1,10 +1,7 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class CameraMoveWithPlayer : MonoBehaviour {
     private  bool ifReturnOriginalSize;
-    private PlayerControl pc;//摄像机不随主角移动时，主角禁止操作
     public bool ifMoveToSolidPoint = false;
     public Vector3 SolidtargetPosition;//移动到定点
     //跟随
@@ -20,8 +17,16 @@ public class CameraMoveWithPlayer : MonoBehaviour {
     {
         character = target.transform;
         ifMoveWithPlayer = true;
+        ifMoveWithOther = false;
+        ifMoveToSolidPoint = false;
         gameObject.GetComponent<DeathCameraFade>().enabled = true;
-    } 
+    }
+
+    public void Reset()
+    {
+        ifMoveWithPlayer = false;
+        transform.position = new Vector2(0,-1.36f);
+    }
     void Start()
     {
         //character = GameObject.Find("NewHero(Clone)").transform;
@@ -33,13 +38,30 @@ public class CameraMoveWithPlayer : MonoBehaviour {
     {
         if (character == null)
             return;
-        //Vector3 TargetPosition = Vector3.zero;
-        //TargetPosition.x = character.position.x >= -3.779f ? character.position.x : -3.779f;
-        //TargetPosition.y = character.position.y <= 2.83f ? character.position.y : 2.83f;
+        //相机范围
+        //x -1.7 -1.84
         if (ifMoveWithPlayer)
         {
-            transform.position = character.position + new Vector3(0, 0, -3);
+            Vector3 TargetPosition = Vector3.zero;
+        
+            if (character.position.x >= -1.7f && character.position.x <= 1.84f)
+                TargetPosition.x = character.position.x;
+            else if (character.position.x < -1.7f)
+                TargetPosition.x = -1.7f;
+            else if (character.position.x > 1.84f)
+                TargetPosition.x = 1.84f;
+            //y -0.68f -2.65
+            if (character.position.y >= -2.65f && character.position.y <= -0.68f)
+                TargetPosition.y = character.position.y;
+            else if (character.position.y < -2.65f)
+                TargetPosition.y = -2.65f;
+            else if (character.position.y > -0.68f)
+                TargetPosition.y = -0.68f;
+            
+            TargetPosition.z = -3f;
+            transform.position = TargetPosition;
         }
+
         else if(ifMoveToSolidPoint)
         {
             transform.position = Vector3.SmoothDamp(transform.position, SolidtargetPosition,

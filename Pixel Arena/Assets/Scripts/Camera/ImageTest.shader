@@ -16,6 +16,7 @@
 			{
 				fixed4 renderTex = tex2D(_MainTex, i.uv);
 			float luminosity = 0.299*renderTex.r + 0.587*renderTex.g + 0.114*renderTex.b;
+			
 			fixed4 finalColor = lerp(renderTex, luminosity, _LuminosityAmount);
 			return finalColor;
 			}

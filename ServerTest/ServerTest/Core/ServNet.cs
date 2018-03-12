@@ -8,6 +8,7 @@ using MySql.Data.MySqlClient;
 using System.Data;
 using System.Linq;
 using System.Reflection;
+using System.Threading;
 
 public class ServNet
 {
@@ -159,7 +160,7 @@ public class ServNet
 			{
 				Console.WriteLine("收到 [" + conn.GetAdress()　+"] 断开链接 + "+e.Message);
 				conn.Close();
-			}
+            }
 		}
 	}
 
@@ -219,7 +220,7 @@ public class ServNet
 				return;
 			}
             object[] obj = new object[]{conn.player,protoBase};
-            if(name!="UpdateUnitInfo")
+            if(name!="Ops")
 			Console.WriteLine ("[处理玩家消息]" + conn.player.id + " :" + name);
 			mm.Invoke (handlePlayerMsg, obj);
 		}

@@ -60,7 +60,6 @@ public class Player
 		if (!DataMgr.instance.SavePlayer(this))
 			return false;
 		//下线
-		conn.player = null;
 		conn.Close();
 		return true;
 	}

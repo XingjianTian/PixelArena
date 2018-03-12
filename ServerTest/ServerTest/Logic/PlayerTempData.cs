@@ -5,10 +5,12 @@ public class PlayerTempData
 {
     public enum Status
     {
-        None,
-        InRoom,
+        OutOfRoom,
+        InRoomNotReady,
+        InRoomReady,
         InGame,
     }
+    public int herotype;//0-soilder,1-ninja,2-roshan
     public Status status;
     //room״̬
     public Room room;
@@ -19,12 +21,13 @@ public class PlayerTempData
     public long lastUpdateTime;
     public float posX;
     public float posY;
-    public long lastShootTime;
-    public float hp = 100;
+    public float maxHp;
+    public float currentHp;
+
 
 
 	public PlayerTempData()
 	{
-        status = Status.None;
+        status = Status.OutOfRoom;
 	}
 }

@@ -1,5 +1,4 @@
-using System;
-using System.Collections;
+
 
 //字符串协议模型
 //形式 名称,参数1,参数2,参数3

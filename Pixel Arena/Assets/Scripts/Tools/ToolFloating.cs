@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class ToolFloating : MonoBehaviour {
     private float radian = 0; // 弧度  
