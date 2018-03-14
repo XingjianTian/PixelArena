@@ -7,3 +7,9 @@ You can choose your hero to fight against others,each hero has different abiliti
 Using lock-frame algorithm to make clients synchronized. 
 
 Database choose MySQL on the server-side.
+
+Update 1 - 2018.3.14
+  3 different rols and 3 colorful maps
+  Full Designed UI
+  Now call it a demo, see it here, https://v.qq.com/x/page/d0604cm50ej.html
+  
