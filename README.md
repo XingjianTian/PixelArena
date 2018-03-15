@@ -9,7 +9,9 @@ Using lock-frame algorithm to make clients synchronized.
 Database choose MySQL on the server-side.
 
 WAN connection is not perfect,I'd change TCP to UDP recently ,trying to solve the slightly unsynchronized problem.
+
 LAN connection is much better,nealy perfect.But if you want to try,you have to set things up on the server-side like changing ip addrss;
+
 ---------------------------------------------
 
 Update 1 - 2018.3.14
