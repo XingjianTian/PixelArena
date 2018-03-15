@@ -128,4 +128,5 @@ public class ProtocolBytes : ProtocolBase
 		int end = 0;
 		return GetFloat (start, ref end);
 	}
+
 }

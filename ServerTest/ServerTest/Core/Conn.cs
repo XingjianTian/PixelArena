@@ -64,7 +64,6 @@ public class Conn
 		{
 			//玩家退出处理，稍后实现
 			player.Logout ();
-            Console.WriteLine(player.id + " logout");
 			return;
 		}
 		Console.WriteLine("[断开链接]" + GetAdress());

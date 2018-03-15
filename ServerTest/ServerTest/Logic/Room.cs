@@ -117,9 +117,12 @@ public class Room
     //广播消息
     public void Broadcast(ProtocolBase protocol)
     {
-        foreach (Player player in list.Values)
+        lock (list)
         {
-            player.Send(protocol);
+            foreach (Player player in list.Values)
+            {
+                player.Send(protocol);
+            }
         }
     }
     //输出房间信息
@@ -167,7 +170,7 @@ public class Room
                 player.tempData.status==PlayerTempData.Status.InRoomNotReady)
                 return false;
         }
-        if (count1 < 1 || count2 < 1)
+        if (count1 < 1 )//|| count2 < 1)
             return false;
         return true;
     }

@@ -23,7 +23,7 @@ public class ServNet
 	//主定时器
 	System.Timers.Timer timer = new System.Timers.Timer(1000);
 	//心跳时间
-	public long heartBeatTime = 15;
+	public long heartBeatTime = 30;
 	//协议
 	public ProtocolBase proto ;
 
@@ -75,6 +75,8 @@ public class ServNet
 		//Socket
 		listenfd = new Socket(AddressFamily.InterNetwork,
 		                      SocketType.Stream, ProtocolType.Tcp);
+        listenfd.NoDelay = true;//关闭Nagel算法
+
 		//Bind
 		IPAddress ipAdr = IPAddress.Parse(host);
 		IPEndPoint ipEp = new IPEndPoint(ipAdr, port);

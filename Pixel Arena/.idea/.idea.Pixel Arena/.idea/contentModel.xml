@@ -134,6 +134,7 @@
             <e p="Panel" t="Include">
               <e p="ConfirmTipPanel.cs" t="Include" />
               <e p="ConnectPanel.cs" t="Include" />
+              <e p="LanPanel.cs" t="Include" />
               <e p="LoginPanel.cs" t="Include" />
               <e p="PanelBase.cs" t="Include" />
               <e p="PanelMgr.cs" t="Include" />

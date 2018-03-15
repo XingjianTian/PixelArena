@@ -40,7 +40,8 @@ using System.Threading.Tasks;
                 protocol.AddInt(0);
             else
                 protocol.AddInt(-1);
-            //创建角色
+        //创建角色
+            Console.WriteLine("Create");
             DataMgr.instance.CreatePlayer(id);
             //返回协议给客户端
             conn.Send(protocol);

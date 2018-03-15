@@ -252,14 +252,14 @@ public class MultiBattle : MonoBehaviour {
         string protoName = proto.GetString(start, ref start);
         int count = proto.GetInt(start, ref start);
         int frame = proto.GetInt(start, ref start);
+        if (gameframe > frame) //丢包或
+        {
+            Debug.Log("gameframe>frame");
+            return;
+        }
         for (int i = 0; i < count; ++i)
         {
             string id = proto.GetString(start, ref start);
-            if (gameframe > frame) //丢包或
-            {
-                Debug.Log("gameframe>frame");
-                return;
-            }
             if (!list.ContainsKey(id))//场景中没有该玩家
             {
                 Debug.Log("list not contain");
@@ -271,6 +271,10 @@ public class MultiBattle : MonoBehaviour {
             {
                 ops[j] = proto.GetInt(start, ref start);
             }
+            if(ops[0]==1)
+                Debug.Log("recv Left");
+            if(ops[1]==1)
+                Debug.Log("recv Right");
             list[id].Player.ProcessOps(ops);
         }
         gameframe++;

@@ -19,7 +19,7 @@ public class Connection
     public ProtocolBase proto;
     //心跳时间
     public float lastTickTime = 0;
-    public float heartBeatTime = 10;
+    public float heartBeatTime = 30;
     //消息分发，随着update，依次读取
     public MsgDistribution msgDist = new MsgDistribution();
 
@@ -38,6 +38,7 @@ public class Connection
         {
             //socket
             socket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
+            socket.NoDelay = true;//关闭Nagel算法
             //Connect
             socket.Connect(host, port);
             //BeginReceive 异步回调

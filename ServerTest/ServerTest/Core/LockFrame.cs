@@ -9,9 +9,7 @@ public class LockFrame{
         lock (id_cmd)
         {
             if (!id_cmd.ContainsKey(p.id))
-            {
                 return;
-            }
             id_cmd[p.id][optochange] = changeto;
         }
     }
@@ -26,7 +24,7 @@ public class LockFrame{
             int[] cmd = new int[5];
             for (int i = 0; i < 5; ++i)
                 cmd[i] = 0;
-            //对每一个，new一个cmd
+            //对每一个player，new一个cmd
             id_cmd.Add(p.Key, cmd);
         }
         Console.WriteLine("Initialized");
@@ -48,6 +46,7 @@ public class LockFrame{
                 foreach (var v in item.Value)
                     protocolRet.AddInt(v);
             }
+
             room.Broadcast(protocolRet);
             gameframe++;
         }

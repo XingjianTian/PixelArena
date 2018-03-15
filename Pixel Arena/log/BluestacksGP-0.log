@@ -1,3 +1,9 @@
 pid=10048 tid=16892 2018-02-01 00:52:58.140 ALARM  logger "-----------------  log4z thread started!   ----------------------------" 
 pid=10048 tid=16892 2018-02-01 00:52:58.140 ALARM  logger "logger id=0 key=Main name=BluestacksGP path=./log/ level=1 display=1" 
 pid=10048 tid=8356 2018-02-01 00:53:18.129 INFO  BluestacksGP.exe  "OnSysCommand" CMainDlg::OnSysCommand (MainDlg.cpp):11573 
+pid=18860 tid=20276 2018-03-14 18:43:25.422 ALARM  logger "-----------------  log4z thread started!   ----------------------------" 
+pid=18860 tid=20276 2018-03-14 18:43:25.423 ALARM  logger "logger id=0 key=Main name=BluestacksGP path=./log/ level=1 display=1" 
+pid=792 tid=6944 2018-03-14 21:22:08.524 ALARM  logger "-----------------  log4z thread started!   ----------------------------" 
+pid=792 tid=6944 2018-03-14 21:22:08.524 ALARM  logger "logger id=0 key=Main name=BluestacksGP path=./log/ level=1 display=1" 
+pid=12692 tid=12520 2018-03-14 21:22:23.496 ALARM  logger "-----------------  log4z thread started!   ----------------------------" 
+pid=12692 tid=12520 2018-03-14 21:22:23.496 ALARM  logger "logger id=0 key=Main name=BluestacksGP path=./log/ level=1 display=1" 

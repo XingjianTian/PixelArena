@@ -1,14 +1,11 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
-
+using System.Net.NetworkInformation;
+using System.Net.Sockets;
 public class ConnectPanel : PanelBase {
 
-    private InputField IPAdressInput;
-    private InputField PortInput;
     private Button NetBtn;
     private Button LocalBtn;
-    public string localIpv4;
-    public string NetIpv4 = "123.206.73.52";
     #region 生命周期
     //初始化
     public override void Init(params object[] args)
@@ -24,14 +21,15 @@ public class ConnectPanel : PanelBase {
         Transform skinTrans = skin.transform;
         NetBtn = skinTrans.Find("NetButton").GetComponent<Button>();
         LocalBtn = skinTrans.Find("LocalButton").GetComponent<Button>();
-        NetBtn.onClick.AddListener(()=>Connect(NetIpv4));
-        LocalBtn.onClick.AddListener(()=>Connect(GetIpAddress()));
+        NetBtn.onClick.AddListener(WanConnect);
+        LocalBtn.onClick.AddListener(LanConnect);
     }
 
 
     #endregion
-    public void Connect(string ip)
+    public void WanConnect()
     {
+        string ip = "123.206.73.52";
         AudioSource.PlayClipAtPoint(Volume.instance.Events[0],Camera.main.transform.position);
         if(NetMgr.srvConn.status!=Connection.Status.Connected)
         {
@@ -40,38 +38,43 @@ public class ConnectPanel : PanelBase {
             NetMgr.srvConn.proto = new ProtocolBytes();
             if (!NetMgr.srvConn.Connect(host, port))
             {
-                PanelMgr.instance.OpenPanel<TipPanel>("", "Failed");
+                PanelMgr.instance.OpenPanel<TipPanel>("", "Failed + "+host);
                 return;
             }
         }
         Close();
         PanelMgr.instance.OpenPanel<LoginPanel>("");
     }
+
+    public void LanConnect()
+    {
+        PanelMgr.instance.OpenPanel<LanPanel>("");
+        Close();
+    }
     private static string GetIpAddress()
     {
-        /*
-        try
+        Debug.Log(Network.player.ipAddress);
+        return Network.player.ipAddress;
+        string userIp = "";
+        NetworkInterface[] adapters = NetworkInterface.GetAllNetworkInterfaces(); ;
+        foreach (NetworkInterface adapter in adapters)
         {
-            string HostName = Dns.GetHostName(); //得到主机名
-            IPHostEntry IpEntry = Dns.GetHostEntry(HostName);
-            for (int i = 0; i < IpEntry.AddressList.Length; i++)
+            if (adapter.Supports(NetworkInterfaceComponent.IPv4))
             {
-                //从IP地址列表中筛选出IPv4类型的IP地址
-                //AddressFamily.InterNetwork表示此IP为IPv4,
-                //AddressFamily.InterNetworkV6表示此地址为IPv6类型
-                if (IpEntry.AddressList[i].AddressFamily == AddressFamily.InterNetwork)
+                UnicastIPAddressInformationCollection uniCast = adapter.GetIPProperties().UnicastAddresses;
+                if (uniCast.Count > 0)
                 {
-                    return IpEntry.AddressList[i].ToString();
+                    foreach (UnicastIPAddressInformation uni in uniCast)
+                    {
+                        //得到IPv4的地址。 AddressFamily.InterNetwork指的是IPv4
+                        if (uni.Address.AddressFamily == AddressFamily.InterNetwork)
+                        {
+                            userIp =uni.Address.ToString();
+                        }
+                    }
                 }
             }
-            return "";
         }
-        catch (Exception ex)
-        {
-            Console.WriteLine(ex.Message);
-            return "";
-        }*/
-        //return Network.player.ipAddress;
-        return "192.168.0.115";
+        return userIp;
     }
 }

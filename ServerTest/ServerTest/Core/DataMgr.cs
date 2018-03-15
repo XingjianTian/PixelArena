@@ -116,6 +116,7 @@ public class DataMgr
 			return false;
 		}
 		byte[] byteArr = stream.ToArray();
+
 		//写入数据库
 		string cmdStr = string.Format ("insert into player set id ='{0}' ,data =@data;",id);
 		MySqlCommand cmd = new MySqlCommand (cmdStr, sqlConn);
@@ -128,7 +129,7 @@ public class DataMgr
 		} 
 		catch (Exception e)
 		{
-			Console.WriteLine("[DataMgr]CreatePlayer 写入 " + e.Message);
+            Console.WriteLine("[DataMgr]CreatePlayer 写入 " + e.Message);
 			return false;
 		}
 	}
@@ -221,9 +222,11 @@ public class DataMgr
 			return false;
 		}
 		byte[] byteArr = stream.ToArray();
+
 		//写入数据库
 		string formatStr = "update player set data =@data where id = '{0}';";
 			string cmdStr = string.Format (formatStr , player.id);
+
 		MySqlCommand cmd = new MySqlCommand (cmdStr, sqlConn);
 		cmd.Parameters.Add ("@data", MySqlDbType.Blob);
 		cmd.Parameters[0].Value = byteArr;
@@ -234,7 +237,8 @@ public class DataMgr
 		} 
 		catch (Exception e)
 		{
-			Console.WriteLine("[DataMgr]CreatePlayer 写入 " + e.Message);
+            Console.WriteLine("Damn save");
+            Console.WriteLine("[DataMgr]CreatePlayer 写入 " + e.Message);
 			return false;
 		}
 	}

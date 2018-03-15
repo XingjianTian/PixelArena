@@ -22,7 +22,7 @@ public sealed class PlayerControl : MonoBehaviour
     //公用状态及量
     public bool allowable = true;//可控制
     public bool facingRight = true;//左右
-    public VInt h; //控制速度
+    public int h; //控制速度
 
     public float realh;
     //检查是否在地面上
@@ -63,8 +63,6 @@ public sealed class PlayerControl : MonoBehaviour
     }
     void Update()
     {
-        realh = (float) h;
-        
         //检查是否在地面
         grounded = Physics2D.Linecast(transform.position, groundCheck.position, 1 << LayerMask.NameToLayer("Ground"));
         grounded = (grounded || (Physics2D.Linecast(transform.position, groundCheck1.position, 1 << LayerMask.NameToLayer("Ground"))));
@@ -169,17 +167,11 @@ public sealed class PlayerControl : MonoBehaviour
     }
     void FixedUpdate()
     {
+        realh = h;
         #region 对h的输出
-        Hero.anim.SetFloat("Speed", (float)h.AbsVInt());
-        if (realh * rig.velocity.x < (float)Hero.maxSpeed) // && grounded)
-        {
-            rig.AddForce(Vector2.right * realh * Hero.moveForce);
-        }
-        //最大速度
-        if (Mathf.Abs(rig.velocity.x) > (float)Hero.maxSpeed)
-            rig.velocity = new Vector2(Mathf.Sign(rig.velocity.x) * (float)Hero.maxSpeed, rig.velocity.y);
+        Hero.anim.SetFloat("Speed", Math.Abs(realh));
         //翻身
-        if (h!=0&&(realh > 0) ^ facingRight)
+        if (realh!=0&&realh>0 ^ facingRight)
         {
             if (Hero.type == HeroType.Ninja)
             {
@@ -189,6 +181,13 @@ public sealed class PlayerControl : MonoBehaviour
             else
                 Flip();
         }
+        if (realh * rig.velocity.x < (float)Hero.maxSpeed) // && grounded)
+        {
+            rig.AddForce(Vector2.right * realh * Hero.moveForce);
+        }
+        //最大速度
+        if (Mathf.Abs(rig.velocity.x) > (float)Hero.maxSpeed)
+            rig.velocity = new Vector2(Mathf.Sign(rig.velocity.x) * (float)Hero.maxSpeed, rig.velocity.y);
         #endregion
     }
     public void Flip()
@@ -226,10 +225,12 @@ public sealed class PlayerControl : MonoBehaviour
                     if (jaw.IfOnTheWall)
                         h = 0;
                     else if (jaw.ifJumpAgainstFinished)
-                        h = (VInt)(realh + (-1 - realh) * 0.5f);
+                        //h = (VInt)(realh + (-1 - realh) * 0.5f);
+                        h = -1;
                 }
                 else
-                    h = (VInt)(realh + (-1 - realh) * 0.5f);
+                    //h = (VInt)(realh + (-1 - realh) * 0.5f);
+                    h = -1;
             }
             if (ops[1] == 1&&allowable) //right
             {
@@ -238,10 +239,12 @@ public sealed class PlayerControl : MonoBehaviour
                     if (jaw.IfOnTheWall)
                         h = 0;
                     else if (jaw.ifJumpAgainstFinished)
-                        h = (VInt)(realh + (1 - realh) * 0.5f);
+                        //h = (VInt)(realh + (1 - realh) * 0.5f);
+                        h = 1;
                 }
                 else
-                    h = (VInt)(realh + (1 - realh) * 0.5f);
+                    //h = (VInt)(realh + (1 - realh) * 0.5f);
+                    h = 1;
             }
         }
         
