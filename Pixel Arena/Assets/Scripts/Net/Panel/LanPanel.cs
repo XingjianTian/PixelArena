@@ -27,7 +27,7 @@ public class LanPanel : PanelBase {
 
         ClosesBtn = skinTrans.Find("CloseButton").GetComponent<Button>();
         ClosesBtn.onClick.AddListener(OnCloseClick);
-        IpInput = skinTrans.Find("IpInputField").Find("Text").GetComponent<Text>();
+        IpInput = skinTrans.Find("IPInputField").Find("Text").GetComponent<Text>();
     }
 
 
