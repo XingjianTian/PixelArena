@@ -24,3 +24,12 @@ Update 1 - 2018.3.14
   
   ---------------------------------------------
   
+
+---------------------------------------------
+
+Update 3 - 2018.4.1
+
+Switch TCP to UDP while transforming operation code,basically solved the internet sort of problems
+  
+  ---------------------------------------------
+  
