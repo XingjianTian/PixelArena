@@ -23,13 +23,10 @@ Update 1 - 2018.3.14
   Now call it a demo, see it here, https://v.qq.com/x/page/d0604cm50ej.html
   
   ---------------------------------------------
-  
-
----------------------------------------------
 
 Update 3 - 2018.4.1
 
-Switch TCP to UDP while transforming operation code,basically solved the internet sort of problems
-  
+ Switch TCP to UDP while transforming operation code,basically solved the internet sort of problems
+ 
   ---------------------------------------------
   
