@@ -188,13 +188,14 @@ a9e1c36c671666e79706791e556d5100 Vuforia.UnityExtensions.dll:Vuforia.VuMarkBehav
 3d1b89310e77c34bc0c8d7132231345c Vuforia.UnityExtensions.dll:Vuforia.WireframeBehaviour
 05524b8f659e7bfe5756d1335fec24ba Vuforia.UnityExtensions.dll:Vuforia.WireframeTrackableEventHandler
 15bea26698002c6c4a3087131232ce5c Vuforia.UnityExtensions.dll:Vuforia.WordBehaviour
+05524b8f659e7bfe5756d1335fec24ba Assembly-CSharp.dll:.Loom
 c8d4d4133a0932749d6faef6a840136d Assembly-CSharp.dll:.ResTipPanel
 05524b8f659e7bfe5756d1335fec24ba Assembly-UnityScript.dll:.J_EasyButtonTemplate
 9990658d4acd3004f5f45459d9880a9b Assembly-CSharp.dll:.Bullet
 2604414720f102c8a4d03a8e529463f9 Assembly-CSharp.dll:.CameraFilterPack_Blur_Focus
 583274048443683a5aaa8d45022df0ac Assembly-CSharp.dll:.ControlKeys
 c8d4d4133a0932749d6faef6a840136d Assembly-CSharp.dll:.TipPanel
-b5882f562acdadb8fcb33a7153bc7e36 Assembly-CSharp.dll:.MultiBattle
+4edf6e0c3d7df7b789b66f2e3714dbdc Assembly-CSharp.dll:.MultiBattle
 7a64359b59701b7605ded95bc30baa4f Assembly-CSharp.dll:.CameraMoveWithPlayer
 f1a2ae54fd3fa9155df3e54582235ad6 Assembly-CSharp.dll:.PagingScrollViewController
 c280e0b3394b55bca3dab51e558b16d0 Assembly-CSharp.dll:.CameraFilterPack_Blur_Bloom
@@ -228,6 +229,7 @@ bc68edb0af574bf79f9550ead8ebae5c UnityEngine.HoloLens.dll:UnityEngine.Audio.Audi
 463516d5b5fe8e67a0a24c48f2095b04 UnityEngine.HoloLens.dll:UnityEngine.EventSystems.HoloLensInputModule
 c2275a8bfbb9f9942cad75ecdfded41d UnityEngine.HoloLens.dll:UnityEngine.XR.WSA.SpatialMappingCollider
 45f3431f0103c41611e8d4eec3d439df UnityEngine.HoloLens.dll:UnityEngine.XR.WSA.SpatialMappingRenderer
+c8d4d4133a0932749d6faef6a840136d Assembly-CSharp.dll:.LanPanel
 69933960f6b9e145f14f4757eb8d38ad Assembly-CSharp.dll:.LightRadius
 9de3a22eca9aefadba2d10d5987cefe3 UnityEngine.SpatialTracking.dll:UnityEngine.SpatialTracking.TrackedPoseDriver
 1a3e94cd2c33229f8b5b11cb93c0db20 Assembly-CSharp.dll:.Volume
@@ -305,4 +307,3 @@ a9e1c36c671666e79706791e556d5100 Vuforia.UnityExtensions.dll:Vuforia.VuMarkBehav
 3d1b89310e77c34bc0c8d7132231345c Vuforia.UnityExtensions.dll:Vuforia.WireframeBehaviour
 05524b8f659e7bfe5756d1335fec24ba Vuforia.UnityExtensions.dll:Vuforia.WireframeTrackableEventHandler
 15bea26698002c6c4a3087131232ce5c Vuforia.UnityExtensions.dll:Vuforia.WordBehaviour
-c8d4d4133a0932749d6faef6a840136d Assembly-CSharp.dll:.LanPanel

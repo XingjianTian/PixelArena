@@ -51,10 +51,11 @@ public class ControlKeys : MonoBehaviour {
 				//pc.Hero.Shoot();
 				{
 					ProtocolBytes proto = new ProtocolBytes();
-					proto.AddString("Ops");
+					//proto.AddString("Ops");
+					proto.AddInt(MultiBattle.Instance.connIndex);
 					proto.AddInt(3);
 					proto.AddInt(1);
-					NetMgr.srvConn.Send(proto);
+					NetMgr.srvConn.udpSend(proto);
 				}
 				//pc.Ops[3] = 1;
 	}
@@ -66,10 +67,11 @@ public class ControlKeys : MonoBehaviour {
 				//pc.Hero.Shoot();
 			{
 				ProtocolBytes proto = new ProtocolBytes();
-				proto.AddString("Ops");
+				//proto.AddString("Ops");
+				proto.AddInt(MultiBattle.Instance.connIndex);
 				proto.AddInt(3);
 				proto.AddInt(0);
-				NetMgr.srvConn.Send(proto);
+				NetMgr.srvConn.udpSend(proto);
 			}
 	}
 
@@ -138,7 +140,7 @@ public class ControlKeys : MonoBehaviour {
 		switch (pc.Hero.type)
 		{
 			case HeroType.Ninja:KeyE_img.sprite = KeyE_imgs[1];break;
-			case HeroType.Solider:KeyE_img.sprite = KeyE_imgs[0];break;
+			case HeroType.Soldier:KeyE_img.sprite = KeyE_imgs[0];break;
 			case HeroType.Roshan:KeyE_img.sprite = KeyE_imgs[2];break;
 			default: break;
 		}
@@ -155,67 +157,66 @@ public class ControlKeys : MonoBehaviour {
 	public void Button_Left_Down()
 	{
 		ProtocolBytes proto = new ProtocolBytes();
-        proto.AddString("Ops");
+	proto.AddInt(MultiBattle.Instance.connIndex);
         proto.AddInt(0);
         proto.AddInt(1);
-        NetMgr.srvConn.Send(proto);
+        NetMgr.srvConn.udpSend(proto);
 	}
 	public void Button_Left_Up()
 	{
 		ProtocolBytes proto = new ProtocolBytes();
-        proto.AddString("Ops");
+	proto.AddInt(MultiBattle.Instance.connIndex);
         proto.AddInt(0);
         proto.AddInt(0);
-        NetMgr.srvConn.Send(proto);
+        NetMgr.srvConn.udpSend(proto);
 	}
 	public void Button_Right_Down()
 	{
 		ProtocolBytes proto = new ProtocolBytes();
-        proto.AddString("Ops");
+	proto.AddInt(MultiBattle.Instance.connIndex);
         proto.AddInt(1);
         proto.AddInt(1);
-        NetMgr.srvConn.Send(proto);
+        NetMgr.srvConn.udpSend(proto);
 	}
 	public void Button_Right_Up()
 	{
 		ProtocolBytes proto = new ProtocolBytes();
-        proto.AddString("Ops");
+	proto.AddInt(MultiBattle.Instance.connIndex);
         proto.AddInt(1);
         proto.AddInt(0);
-        NetMgr.srvConn.Send(proto);
+        NetMgr.srvConn.udpSend(proto);
 	}
 	public void Button_Jump_Down()
 	{
 		ProtocolBytes proto = new ProtocolBytes();
-        proto.AddString("Ops");
+	proto.AddInt(MultiBattle.Instance.connIndex);
         proto.AddInt(2);
         proto.AddInt(1);
-        NetMgr.srvConn.Send(proto);
-		Debug.Log("fuck");
+        NetMgr.srvConn.udpSend(proto);
 	}
 	public void Button_Jump_Up()
 	{
 		ProtocolBytes proto = new ProtocolBytes();
-        proto.AddString("Ops");
+	proto.AddInt(MultiBattle.Instance.connIndex);
         proto.AddInt(2);
         proto.AddInt(0);
-        NetMgr.srvConn.Send(proto);
+        NetMgr.srvConn.udpSend(proto);
 	}
 	public void Button_E_Down()
 	{
 		ProtocolBytes proto = new ProtocolBytes();
-        proto.AddString("Ops");
+	proto.AddInt(MultiBattle.Instance.connIndex);
         proto.AddInt(4);
         proto.AddInt(1);
-        NetMgr.srvConn.Send(proto);
+        NetMgr.srvConn.udpSend(proto);
 	}
 	public void Button_E_Up()
 	{
 		ProtocolBytes proto = new ProtocolBytes();
-        proto.AddString("Ops");
+	proto.AddInt(MultiBattle.Instance.connIndex);
         proto.AddInt(4);
         proto.AddInt(0);
-        NetMgr.srvConn.Send(proto);
+        NetMgr.srvConn.udpSend(proto);
 	}
 	
 #endif

@@ -49,7 +49,7 @@ public class RoomListPanel : PanelBase
         RoleTitle = CareerTrans.Find("RoleTitle").GetComponent<Text>();
         switch (herotype)
         {
-            case 0:RoleTitle.text += "Solider";break;
+            case 0:RoleTitle.text += "Soldier";break;
             case 1:RoleTitle.text += "Ninja";break;
             case 2:RoleTitle.text += "Roshan";break;
         }

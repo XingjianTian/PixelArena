@@ -15,6 +15,7 @@ public class Conn
 	public const int BUFFER_SIZE = 1024;
 	//Socket套接字
 	public Socket socket;
+    public IPEndPoint udpendpoint_afterwhatever;
 	//是否使用
 	public bool isUse = false;
 	//Buff

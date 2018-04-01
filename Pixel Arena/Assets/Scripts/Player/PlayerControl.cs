@@ -49,9 +49,11 @@ public sealed class PlayerControl : MonoBehaviour
         Hero = gameObject.GetComponent<Heroes>();
         ps = PlayerState.Stay;
         
+        
     }
     void Start()
     {
+        
         CanvasHealth = transform.Find("CanvasHealth").gameObject;
         CanvasHealth.transform.GetChild(0).gameObject.SetActive(true);
         healthSlider = CanvasHealth.GetComponentInChildren<Slider>();
@@ -94,72 +96,80 @@ public sealed class PlayerControl : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.A))
         {
             ProtocolBytes proto = new ProtocolBytes();
-            proto.AddString("Ops");
+            //proto.AddString("Ops");
+            proto.AddInt(MultiBattle.Instance.connIndex);
             proto.AddInt(0);
             proto.AddInt(1);
-            NetMgr.srvConn.Send(proto);
+            NetMgr.srvConn.udpSend(proto);
         }
         if (Input.GetKeyUp(KeyCode.A))
         {
             ProtocolBytes proto = new ProtocolBytes();
-            proto.AddString("Ops");
+            //proto.AddString("Ops");
+            proto.AddInt(MultiBattle.Instance.connIndex);
             proto.AddInt(0);
             proto.AddInt(0);
-            NetMgr.srvConn.Send(proto);
+            NetMgr.srvConn.udpSend(proto);
         }
         //right
         if (Input.GetKeyDown(KeyCode.D))
         {
             ProtocolBytes proto = new ProtocolBytes();
-            proto.AddString("Ops");
+            //proto.AddString("Ops");
+            proto.AddInt(MultiBattle.Instance.connIndex);
             proto.AddInt(1);
             proto.AddInt(1);
-            NetMgr.srvConn.Send(proto);
+            NetMgr.srvConn.udpSend(proto);
         }
         if (Input.GetKeyUp(KeyCode.D))
         {
             ProtocolBytes proto = new ProtocolBytes();
-            proto.AddString("Ops");
+            //proto.AddString("Ops");
+            proto.AddInt(MultiBattle.Instance.connIndex);
             proto.AddInt(1);
             proto.AddInt(0);
-            NetMgr.srvConn.Send(proto);
+            NetMgr.srvConn.udpSend(proto);
         }
         //jump
         if (Input.GetKeyDown(KeyCode.Space))
         {
             ProtocolBytes proto = new ProtocolBytes();
-            proto.AddString("Ops");
+            //proto.AddString("Ops");
+            proto.AddInt(MultiBattle.Instance.connIndex);
             proto.AddInt(2);
             proto.AddInt(1);
-            NetMgr.srvConn.Send(proto);
+            NetMgr.srvConn.udpSend(proto);
             //Debug.Log(GameMgr.Instance.id+" Press jump");
             
         }
         if (Input.GetKeyUp(KeyCode.Space))
         {
             ProtocolBytes proto = new ProtocolBytes();
-            proto.AddString("Ops");
+            //proto.AddString("Ops");
+            proto.AddInt(MultiBattle.Instance.connIndex);
             proto.AddInt(2);
             proto.AddInt(0);
-            NetMgr.srvConn.Send(proto);
+            NetMgr.srvConn.udpSend(proto);
         }
         //射击在外部改变op3
         if (Input.GetKeyDown(KeyCode.E))
         {
             ProtocolBytes proto = new ProtocolBytes();
-            proto.AddString("Ops");
+            //proto.AddString("Ops");
+            proto.AddInt(MultiBattle.Instance.connIndex);
             proto.AddInt(4);
             proto.AddInt(1);
-            NetMgr.srvConn.Send(proto);
+            NetMgr.srvConn.udpSend(proto);
             
         }
         if (Input.GetKeyUp(KeyCode.E))
         {
             ProtocolBytes proto = new ProtocolBytes();
-            proto.AddString("Ops");
+            //proto.AddString("Ops");
+            proto.AddInt(MultiBattle.Instance.connIndex);
             proto.AddInt(4);
             proto.AddInt(0);
-            NetMgr.srvConn.Send(proto);
+            NetMgr.srvConn.udpSend(proto);
            
         }
         #endregion
@@ -167,11 +177,14 @@ public sealed class PlayerControl : MonoBehaviour
     }
     void FixedUpdate()
     {
-        realh = h;
-        #region 对h的输出
-        Hero.anim.SetFloat("Speed", Math.Abs(realh));
+        
+    }
+
+    void PlayerMove(int rate)
+    {
+        Hero.anim.SetFloat("Speed", Math.Abs(rate));
         //翻身
-        if (realh!=0&&realh>0 ^ facingRight)
+        if (rate!=0&&rate>0 ^ facingRight)
         {
             if (Hero.type == HeroType.Ninja)
             {
@@ -181,14 +194,13 @@ public sealed class PlayerControl : MonoBehaviour
             else
                 Flip();
         }
-        if (realh * rig.velocity.x < (float)Hero.maxSpeed) // && grounded)
+        if (((VInt)rig.velocity.x).AbsVInt() <= Hero.maxSpeed) // && grounded)
         {
-            rig.AddForce(Vector2.right * realh * Hero.moveForce);
+            rig.AddForce(Vector2.right * rate * Hero.moveForce);
         }
         //最大速度
-        if (Mathf.Abs(rig.velocity.x) > (float)Hero.maxSpeed)
-            rig.velocity = new Vector2(Mathf.Sign(rig.velocity.x) * (float)Hero.maxSpeed, rig.velocity.y);
-        #endregion
+        if (((VInt)rig.velocity.x).AbsVInt() > Hero.maxSpeed)
+            rig.velocity = new Vector2(facingRight?(float)Hero.maxSpeed:-(float)Hero.maxSpeed, rig.velocity.y);
     }
     public void Flip()
     {
@@ -212,7 +224,7 @@ public sealed class PlayerControl : MonoBehaviour
         StopCoroutine("JudgeJumpFinshed");
         
     }
-    public void ProcessOps(int[]ops)
+    public void  ProcessOps(int[]ops)
     {
         if (ops[0] == 0 && ops[1] == 0)
             h =0;
@@ -246,8 +258,9 @@ public sealed class PlayerControl : MonoBehaviour
                     //h = (VInt)(realh + (1 - realh) * 0.5f);
                     h = 1;
             }
+           
         }
-        
+        PlayerMove(h);
         if (ops[2] == 1&&allowable)//jump
         {
             if (Time.time - Hero.lastJumpTime < Hero.JumpInterval)
@@ -311,6 +324,7 @@ public sealed class PlayerControl : MonoBehaviour
     //发送hit信息
     public void SendHit(string id, float damage)
     {
+        //Debug.Log("sendhit");
         ProtocolBytes proto = new ProtocolBytes();
         proto.AddString("Hit");
         proto.AddString(id); //敌人id

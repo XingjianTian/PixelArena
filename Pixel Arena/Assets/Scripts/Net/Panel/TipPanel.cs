@@ -47,6 +47,8 @@ public class TipPanel : PanelBase
             cmwp.Reset();
             MultiBattle.Instance.ClearBattle();
             DeathCameraFade.Instance.enabled = false;
+            NetMgr.srvConn.MyClose();
+            //NetMgr.srvConn.MyUdpClientInstance = null;
             PanelMgr.instance.OpenPanel<RoomPanel>("");
             
         }
@@ -55,6 +57,8 @@ public class TipPanel : PanelBase
             ProtocolBytes protocol = new ProtocolBytes();
             protocol.AddString("Logout");
             NetMgr.srvConn.Send(protocol, (ProtocolBase) =>NetMgr.srvConn.Close());
+            NetMgr.srvConn.MyClose();
+           // NetMgr.srvConn.MyUdpClientInstance = null;
             Application.Quit();
         }
     }

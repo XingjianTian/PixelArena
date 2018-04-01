@@ -37,18 +37,21 @@ public class LockFrame{
         lock (id_cmd)
         {
             ProtocolBytes protocolRet = new ProtocolBytes();
-            protocolRet.AddString("FrameOps");
+            //protocolRet.AddString("FrameOps");
             protocolRet.AddInt(id_cmd.Count);
             protocolRet.AddInt(gameframe);//frame
             foreach (var item in id_cmd)//集和已修改，可能不能遍历
             {
                 protocolRet.AddString(item.Key);//id
+                string ops = "";
                 foreach (var v in item.Value)
-                    protocolRet.AddInt(v);
+                    //protocolRet.AddInt(v);
+                    ops += v.ToString();
+                protocolRet.AddString(ops);
             }
 
-            room.Broadcast(protocolRet);
-            gameframe++;
+            room.udpBroadcast(protocolRet);
+            ++gameframe;
         }
     }
 }

@@ -31,8 +31,7 @@ public partial class HandlePlayerMsg
             string protoName = protocol.GetString(start, ref start);
             //处理
             player.data.killNum += 1;
-            player.data.kd = player.data.killedNum == 0 ? player.data.killNum : player.data.killNum / player.data.killedNum;
-        player.data.winpercentage = player.data.kd;
+            player.data.kd = player.data.killedNum == 0 ? player.data.killNum : (float)player.data.killNum / (float)player.data.killedNum;
         Console.WriteLine("MsgAddKillNum " + player.id + " " + player.data.killNum.ToString());
         }
         //增加被杀数
@@ -46,7 +45,6 @@ public partial class HandlePlayerMsg
             //处理
             player.data.killedNum += 1;
         player.data.kd =player.data.killNum / player.data.killedNum;
-        player.data.winpercentage = player.data.kd;
         Console.WriteLine("MsgAddKillNum " + player.id + " " + player.data.killedNum.ToString());
         }
 
@@ -62,7 +60,7 @@ public partial class HandlePlayerMsg
         ProtocolBytes protocolRet = new ProtocolBytes();
         protocolRet.AddString("GetAchieve");
         protocolRet.AddFloat(player.data.kd);
-        protocolRet.AddFloat(player.data.winpercentage);
+        protocolRet.AddInt(player.data.winTimes);
         protocolRet.AddInt(player.data.killNum);
         protocolRet.AddInt(player.data.killedNum);
         player.Send(protocolRet);

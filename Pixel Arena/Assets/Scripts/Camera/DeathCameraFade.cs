@@ -20,10 +20,14 @@ public class DeathCameraFade : MonoBehaviour
         }
     }
 	// Use this for initialization
-	void Start () {
+    private void Awake()
+    {
+        Instance = this;
+    }
+
+    void Start () {
         //if (Player.GetComponent<DeathControl>().ifdead == true)
         // {
-	    Instance = this;
         pc = MultiBattle.Instance.list[GameMgr.Instance.id].Player;
             if (SystemInfo.supportsImageEffects == false)
             {

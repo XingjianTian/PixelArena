@@ -13,9 +13,10 @@ using System.Threading;
 public class ServNet
 {
 	//监听嵌套字
-	public Socket listenfd; 
-	//客户端链接
-	public Conn[] conns; 
+	public Socket listenfd;
+    public UdpClient udpServer;
+    //客户端链接
+    public Conn[] conns; 
 	//最大链接数
 	public int maxConn = 50;
 	//单例
@@ -32,9 +33,15 @@ public class ServNet
 	public HandlePlayerMsg handlePlayerMsg = new HandlePlayerMsg();
 	public HandlePlayerEvent handlePlayerEvent = new HandlePlayerEvent ();
 
-
+    //udp线程
+    public bool udpcontinue = false;
+    class UdpState
+    {
+        public UdpClient u = null;
+        public IPEndPoint e =null;
+    }
     //单线程单例实现
-	public ServNet()
+    public ServNet()
 	{
 		instance = this;
 	}
@@ -58,9 +65,97 @@ public class ServNet
 		}
 		return -1;
 	}
-	
-	//开启服务器
-	public void Start(string host, int port)
+    public static string GetIpAddress()
+    {
+        try
+        {
+            string HostName = Dns.GetHostName(); //得到主机名
+            IPHostEntry IpEntry = Dns.GetHostEntry(HostName);
+            for (int i = 0; i < IpEntry.AddressList.Length; i++)
+            {
+                //从IP地址列表中筛选出IPv4类型的IP地址
+                //AddressFamily.InterNetwork表示此IP为IPv4,
+                //AddressFamily.InterNetworkV6表示此地址为IPv6类型
+                if (IpEntry.AddressList[i].AddressFamily == AddressFamily.InterNetwork)
+                {
+                    return IpEntry.AddressList[i].ToString();
+                }
+            }
+            return "";
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine(ex.Message);
+            return "";
+        }
+    }
+    //开启udpclient
+    public void CreateUdpClient()
+    {
+        if (udpServer == null)
+        {   IPAddress locateIp = IPAddress.Parse(GetIpAddress());
+            var locatePoint = new IPEndPoint(locateIp, 1234);
+            udpServer = new UdpClient(locatePoint);
+            //监听创建好后，就开始接收信息，并创建一个线程
+            udpServer.BeginReceive(udpReceiveCb, null);
+        }
+    }
+    //udp点对点发送
+    public void UdpSend(Conn conn, ProtocolBase protocol)
+    {
+        if (conn.udpendpoint_afterwhatever != null)
+        {
+            byte[] bytes = protocol.Encode();//编码
+            byte[] length = BitConverter.GetBytes(bytes.Length);
+            byte[] sendbuff = length.Concat(bytes).ToArray();
+            udpServer.Send(sendbuff, sendbuff.Length, conn.udpendpoint_afterwhatever);
+            Console.WriteLine(conn.udpendpoint_afterwhatever);
+        }
+    }
+    private void udpReceiveCb(IAsyncResult ar)
+    {
+        byte[] recBuffer;
+        IPEndPoint remotePoint = new IPEndPoint(IPAddress.Any, 0);//远端IP
+        while (true)
+        {
+            try
+            {
+                
+                recBuffer = udpServer.Receive(ref remotePoint);
+                ProtocolBytes protocol = (ProtocolBytes)proto.Decode(recBuffer, sizeof(Int32), BitConverter.ToInt32(recBuffer, 0));
+                
+
+                if (recBuffer != null)
+                {
+                    string name = protocol.GetName();
+                    if (name == "Test")
+                    {
+                        int start = 0;
+                        string protoname = protocol.GetString(start, ref start);
+                        int index = protocol.GetInt(start, ref start);
+                        conns[index].udpendpoint_afterwhatever = remotePoint;//记录remote udp endpoint
+                        //Console.WriteLine(remotePoint);
+                    }
+                    else
+                    {
+                        int start = 0;
+                        int index = protocol.GetInt(start, ref start);
+                        int optochange = protocol.GetInt(start, ref start);
+                        int changeto = protocol.GetInt(start, ref start);
+                        if (optochange < 0 || optochange > 4)
+                            return;
+                        conns[index].player.tempData.room.lf.Update_lockstep_data(conns[index].player, optochange, changeto);
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }
+        }
+    }
+    //开启服务器
+    public void Start(string host, int port)
 	{
 		//定时器
 		timer.Elapsed += new System.Timers.ElapsedEventHandler(HandleMainTimer);
@@ -108,8 +203,16 @@ public class ServNet
 				conn.Init(socket);
 				string adr = conn.GetAdress();
 				Console.WriteLine("客户端连接 [" + adr　+"] conn池ID：" + index);
+
+                var protocol = new ProtocolBytes();
+                protocol.AddString("ConnIndex");
+                protocol.AddInt(index);
+                protocol.AddString(((IPEndPoint)conn.socket.LocalEndPoint).Address.ToString());
+                //返回协议给客户端
+                conn.Send(protocol);
+
                 //开始接受客户端信息
-				conn.socket.BeginReceive(conn.readBuff, 
+                conn.socket.BeginReceive(conn.readBuff, 
 				                         conn.buffCount, conn.BuffRemain(),
 				                         SocketFlags.None, ReceiveCb, conn);
 			}
@@ -143,7 +246,8 @@ public class ServNet
 		{
 			try 
 			{
-				int count = conn.socket.EndReceive (ar);
+
+                int count = conn.socket.EndReceive (ar);
 				//关闭信号
 				if(count <= 0)
 				{
@@ -228,6 +332,7 @@ public class ServNet
 		}
 	}
 
+    
 	//发送
 	public void Send(Conn conn, ProtocolBase protocol)
 	{

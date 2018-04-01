@@ -2,25 +2,25 @@
 
 Shader "Custom/Test3" {
 	Properties{
-		_MainTex("Base (RGB)", 2D) = "white" {}
+		_MainTex("Base (RGB)", 2D) = "white" {}//defalut texture
 	_Float1("Float1",Float) = 0.0
 	}
 
 		SubShader{
-		Pass{
+		Tags{}//标签
+		
+		//渲染状态
+		//Cull Back
+		Pass{//完整的渲染流程
 		CGPROGRAM
-
 #pragma vertex vert
 #pragma fragment frag
-
 		uniform sampler2D _MainTex;
 	uniform float _Float1;
-
 	struct Input {
 		float4 pos : POSITION;
 		float2 uv : TEXCOORD0;
 	};
-
 	struct v2f {
 		float4 pos : POSITION;
 		float2 uv : TEXCOORD0;
@@ -32,7 +32,6 @@ Shader "Custom/Test3" {
 		o.uv = i.uv;
 		return o;
 	}
-
 	float4 frag(v2f i) : COLOR{
 		float4 outColor;
 	outColor = tex2D(_MainTex, i.uv) + _Float1;

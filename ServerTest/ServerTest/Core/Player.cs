@@ -24,6 +24,10 @@ public class Player
 			return;
 		ServNet.instance.Send(conn, proto);
 	}
+    public void udpSend(ProtocolBase proto)
+    {
+        ServNet.instance.UdpSend(conn, proto);
+    }
 	
 	//踢下线
 	public static bool KickOff(string id, ProtocolBase proto)

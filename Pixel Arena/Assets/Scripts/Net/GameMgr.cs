@@ -19,4 +19,5 @@ public class GameMgr : MonoBehaviour
     {
         Instance = this;
     }
+	
 }

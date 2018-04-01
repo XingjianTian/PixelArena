@@ -11,7 +11,7 @@ namespace ServerTest
 {
     class Program
     {
-        private static string GetIpAddress()
+        public static string GetIpAddress()
         {
             try
             {
@@ -41,7 +41,8 @@ namespace ServerTest
             ServNet servNet = new ServNet();
             servNet.proto = new ProtocolBytes();
             //192.168.0.102
-            servNet.Start(GetIpAddress(), 1234);
+            servNet.Start(GetIpAddress(), 1234);//tcp
+            servNet.CreateUdpClient();//udp
             //Console.ReadLine();
             DataMgr dataMgr = new DataMgr();
             RoomMgr roomMgr = new RoomMgr();

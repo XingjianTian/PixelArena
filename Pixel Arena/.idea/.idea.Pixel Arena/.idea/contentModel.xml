@@ -123,6 +123,7 @@
           <e p="Net" t="Include">
             <e p="Core" t="Include">
               <e p="Connection.cs" t="Include" />
+              <e p="Loom.cs" t="Include" />
               <e p="MsgDistribution.cs" t="Include" />
               <e p="NetMgr.cs" t="Include" />
               <e p="ProtocolBase.cs" t="Include" />

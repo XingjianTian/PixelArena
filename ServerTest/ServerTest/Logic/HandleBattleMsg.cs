@@ -80,29 +80,6 @@ public partial class HandlePlayerMsg
         Console.WriteLine(" ChangesTo " + room.MapType);
         room.Broadcast(protocolret);
     }
-    //乐观帧处理操作
-    public void MsgOps(Player player, ProtocolBase protoBase)
-    {
-        //旧版：每帧更新所有操作
-        /*
-        int[] cmd = new int[5];
-        //获取数值
-        int start = 0;
-        ProtocolBytes protocol = (ProtocolBytes)protoBase;
-        string protoName = protocol.GetString(start, ref start);
-        for (int i = 0; i < 5; ++i)
-            cmd[i] = protocol.GetInt(start, ref start);
-        player.tempData.room.lf.update_lockstep_data(player, cmd);*/
-        int start = 0;
-        ProtocolBytes protocol = (ProtocolBytes)protoBase;
-        string protoName = protocol.GetString(start, ref start);
-        int optochange = protocol.GetInt(start, ref start);
-        int changeto = protocol.GetInt(start, ref start);
-        if (optochange < 0 || optochange > 4)
-            return;
-        player.tempData.room.lf.Update_lockstep_data(player, optochange,changeto);
-        
-    }
     public void MsgESoilder(Player player,ProtocolBase protoBase)
     {
         float afterhealinghp = player.tempData.currentHp + 60;
@@ -113,6 +90,7 @@ public partial class HandlePlayerMsg
       服务器广播 id enemyid damage*/
     public void MsgHit(Player player,ProtocolBase protoBase)
     {
+        Console.WriteLine("recv hit");
         //获取数值
         int start = 0;
         ProtocolBytes protocol = (ProtocolBytes)protoBase;
@@ -153,6 +131,7 @@ public partial class HandlePlayerMsg
         protocolRet.AddString(enemyID);
         protocolRet.AddFloat(damage);
         room.Broadcast(protocolRet);
+        Console.WriteLine("send hit");
         //胜负判断
         room.UpdateWin();
     }

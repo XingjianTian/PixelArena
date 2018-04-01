@@ -7,7 +7,7 @@ using Random = UnityEngine.Random;
 public enum HeroType
 {
 	Ninja,
-	Solider,
+	Soldier,
 	Roshan
 }
 public class Heroes : MonoBehaviour{
@@ -68,7 +68,7 @@ public class Heroes : MonoBehaviour{
 			case HeroType.Ninja:
 			{
 				moveForce = 80;
-				maxSpeed = (VInt)1.2f;
+				maxSpeed = (VInt)1f;
 				jumpForce = 250;//避免跳太高
 				maxHp = 100;//生命值
 				shootInterval = 2f;//射击的时间间隔
@@ -77,10 +77,10 @@ public class Heroes : MonoBehaviour{
 				offset.y = 0f;
 			}
 				break;
-			case HeroType.Solider:
+			case HeroType.Soldier:
 			{
 				moveForce = 80;
-				maxSpeed = (VInt)1f;
+				maxSpeed = (VInt)0.8f;
 				jumpForce = 250;
 				maxHp = 150;//生命值
 				shootInterval = 0.3f;//射击的时间间隔
@@ -92,7 +92,7 @@ public class Heroes : MonoBehaviour{
 			case HeroType.Roshan:
 			{
 				moveForce = 60;
-				maxSpeed = (VInt)0.8f;
+				maxSpeed = (VInt)0.6f;
 				jumpForce = 250;
 				maxHp = 250;//生命值
 				shootInterval = 0.15f;//射击的时间间隔
@@ -135,7 +135,7 @@ public class Heroes : MonoBehaviour{
 				lastShootTime = Time.time;
 			}
 				break;
-			case HeroType.Solider:
+			case HeroType.Soldier:
 			{
 				Vector2 pos = new Vector2(transform.position.x + (pc.facingRight ? offset.x : -offset.x), transform.position.y+offset.y);
 				bullet.GetComponent<Bullet>().ifright = pc.facingRight;
@@ -312,7 +312,7 @@ public class Heroes : MonoBehaviour{
 				}
 			}
 				break;
-			case HeroType.Solider:
+			case HeroType.Soldier:
 			{
 				float afterhealinghp = pc.currenthp + 60;
 				pc.currenthp = Math.Min(afterhealinghp,maxHp);

@@ -12,4 +12,15 @@ public class Root : MonoBehaviour {
 	void Update () {
         NetMgr.Update();
     }
+
+	private void OnDestroy()
+	{
+		Debug.Log("destroy");
+		if(NetMgr.srvConn.MyUdpClientInstance!=null)
+		NetMgr.srvConn.MyClose();
+		if (NetMgr.srvConn.socket != null)
+			NetMgr.srvConn.Close();
+		
+		NetMgr.srvConn.udpcontinue = false;
+	}
 }

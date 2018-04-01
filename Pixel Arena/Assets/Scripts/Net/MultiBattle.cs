@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class MultiBattle : MonoBehaviour {
 
+    public int connIndex = -1;
+    public int gameframe = 0;
     //单例
     public static MultiBattle Instance;
     /*
@@ -86,10 +88,10 @@ public class MultiBattle : MonoBehaviour {
         //还有oncelistenner已添加过
         NetMgr.srvConn.msgDist.AddListener("Hit",RecvHit);
         NetMgr.srvConn.msgDist.AddListener("Result",RecvResult);
-        NetMgr.srvConn.msgDist.AddListener("FrameOps",RecvOps);
         NetMgr.srvConn.msgDist.AddListener("CreateBuff",CreateBuff);
+        
         PanelMgr.instance.OpenPanel<ResTipPanel>("","Start");
-
+        NetMgr.srvConn.CreateUdpClient();
     }
     public void GeneratePlayer(string id, int team, int bornPosID,int herotype)
     {
@@ -178,6 +180,7 @@ public class MultiBattle : MonoBehaviour {
     //收到hit协议
     public void RecvHit(ProtocolBase protocol)
     {
+        //Debug.Log("recv hit");
         //解析协议
         int start = 0;
         ProtocolBytes proto = (ProtocolBytes) protocol;
@@ -199,6 +202,7 @@ public class MultiBattle : MonoBehaviour {
     //收到Result协议
     public void RecvResult(ProtocolBase protocol)
     {
+        NetMgr.srvConn.udpcontinue = false;
         //解析协议
         int start = 0;
         ProtocolBytes proto = (ProtocolBytes) protocol;
@@ -211,7 +215,6 @@ public class MultiBattle : MonoBehaviour {
         //取消监听
         NetMgr.srvConn.msgDist.DelListener("Hit",RecvHit);
         NetMgr.srvConn.msgDist.DelListener("Result",RecvResult);
-        NetMgr.srvConn.msgDist.DelListener("FrameOps",RecvOps);
         NetMgr.srvConn.msgDist.DelListener("CreateBuff",CreateBuff);
         Camera.main.GetComponent<CameraFilterPack_AAA_SuperComputer>().enabled = false;
         Camera.main.GetComponent<CameraFilterPack_Blur_BlurHole>().enabled = false;
@@ -241,43 +244,6 @@ public class MultiBattle : MonoBehaviour {
         
     }
 
-    public int gameframe = 0;
     
-    //每个客户端只传一人，但接收所有
-    public void RecvOps(ProtocolBase protocol)
-    {
-        //解析协议
-        int start = 0;
-        ProtocolBytes proto = (ProtocolBytes) protocol;
-        string protoName = proto.GetString(start, ref start);
-        int count = proto.GetInt(start, ref start);
-        int frame = proto.GetInt(start, ref start);
-        if (gameframe > frame) //丢包或
-        {
-            Debug.Log("gameframe>frame");
-            return;
-        }
-        for (int i = 0; i < count; ++i)
-        {
-            string id = proto.GetString(start, ref start);
-            if (!list.ContainsKey(id))//场景中没有该玩家
-            {
-                Debug.Log("list not contain");
-                return;
-            }
-            //对应角色处理操作集
-            int []ops = new int[5];
-            for (int j = 0; j < 5; ++j)
-            {
-                ops[j] = proto.GetInt(start, ref start);
-            }
-            if(ops[0]==1)
-                Debug.Log("recv Left");
-            if(ops[1]==1)
-                Debug.Log("recv Right");
-            list[id].Player.ProcessOps(ops);
-        }
-        gameframe++;
-        
-    }
+    
 }

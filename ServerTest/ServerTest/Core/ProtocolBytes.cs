@@ -7,7 +7,6 @@ public class ProtocolBytes : ProtocolBase
 {
 	//传输的字节流
 	public byte[] bytes;
-	
 	//解码器
 	public override ProtocolBase Decode(byte[] readbuff, int start, int length)
 	{
@@ -76,8 +75,6 @@ public class ProtocolBytes : ProtocolBase
 		int end = 0;
 		return GetString (start, ref end);
 	}
-
-
 
 	public void AddInt(int num)
 	{

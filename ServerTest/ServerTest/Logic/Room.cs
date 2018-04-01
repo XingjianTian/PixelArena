@@ -6,6 +6,8 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Timers;
+using System.Net;
+using System.Net.Sockets;
 //using pair = System.Collections.Generic.KeyValuePair<string, Player>;
 
 public class Room
@@ -26,6 +28,9 @@ public class Room
 
     Thread FrameSend;
     Thread CreateBuff;
+    bool ifsendon = false;
+    System.Timers.Timer t1;
+    System.Timers.Timer t2;
     Random rd = new Random();
     //添加玩家
     public bool AddPlayer(Player player,int herotype)
@@ -114,6 +119,17 @@ public class Room
         }
     }
 
+    //udp
+    public void udpBroadcast(ProtocolBase protocol)
+    {
+        lock (list)
+        {
+            foreach (Player player in list.Values)
+            {
+                player.udpSend(protocol);
+            }
+        }
+    }
     //广播消息
     public void Broadcast(ProtocolBase protocol)
     {
@@ -211,18 +227,20 @@ public class Room
 
         //lockframe初始化
         lf.initialize(list);
+        ifsendon = true;
         FrameSend = new Thread(lockframesend);
         FrameSend.Start();
+        
         CreateBuff = new Thread(CreateBuffStone);
         CreateBuff.Start();
     }
-    
     private void lockframesend()
     {
-        System.Timers.Timer t = new System.Timers.Timer(20);//实例化，设置间隔时间；
-        t.Elapsed += new System.Timers.ElapsedEventHandler(theout);//到达时间的时候执行事件；
-        t.AutoReset = true;//设置是执行一次（false）还是一直执行(true)；
-        t.Enabled = true;//是否执行System.Timers.Timer.Elapsed事件；
+        Console.Write("1");
+        t1 = new System.Timers.Timer(20);//实例化，设置间隔时间；
+        t1.Elapsed += new System.Timers.ElapsedEventHandler(theout);//到达时间的时候执行事件；
+        t1.AutoReset = true;//设置是执行一次（false）还是一直执行(true)；
+        t1.Enabled = true;//是否执行System.Timers.Timer.Elapsed事件；
     }
     void theout(object source, System.Timers.ElapsedEventArgs e)
     {
@@ -230,10 +248,10 @@ public class Room
     }
     private void CreateBuffStone()
     {
-        System.Timers.Timer t = new System.Timers.Timer(15000);//实例化，设置间隔时间；
-        t.Elapsed += new System.Timers.ElapsedEventHandler(CreateB);//到达时间的时候执行事件；
-        t.AutoReset = true;//设置是执行一次（false）还是一直执行(true)；
-        t.Enabled = true;//是否执行System.Timers.Timer.Elapsed事件
+        t2 = new System.Timers.Timer(15000);//实例化，设置间隔时间；
+        t2.Elapsed += new System.Timers.ElapsedEventHandler(CreateB);//到达时间的时候执行事件；
+        t2.AutoReset = true;//设置是执行一次（false）还是一直执行(true)；
+        t2.Enabled = true;//是否执行System.Timers.Timer.Elapsed事件
     }
     //每15s
     void CreateB(object source, System.Timers.ElapsedEventArgs e)
@@ -256,11 +274,15 @@ public class Room
             return 0;
         int count1 = 0;
         int count2 = 0;
+        int count3 = 0;
+        int count4 = 0;
         foreach(Player player in list.Values)
         {
             PlayerTempData pt = player.tempData;
-            if (pt.team == 1 && pt.currentHp > 0) count1++;
-            if (pt.team == 2 && pt.currentHp > 0) count2++;
+            if (pt.team == 1 && pt.currentHp > 0) ++count1;
+            if (pt.team == 2 && pt.currentHp > 0) ++count2;
+            if (pt.team == 3 && pt.currentHp > 0) ++count3;
+            if (pt.team == 4 && pt.currentHp > 0) ++count4;
         }
         if (count1 <= 0) return 2;
         if (count2 <= 0) return 1;
@@ -291,9 +313,15 @@ public class Room
         protocol.AddInt(isWin);
         Broadcast(protocol);
         Console.WriteLine("check update battle");
+        StopFrameSend();
+    }
+    public void StopFrameSend()
+    {
         FrameSend.Abort();
+        CreateBuff.Abort();
         lf.Clean_lockstep_data();
-        
+        t1.Close();
+        t2.Close();
     }
     //中途退出战斗
     public void ExitFight(Player player)
